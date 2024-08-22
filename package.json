@@ -1,0 +1,24 @@
+{
+  "name": "operationscontrol",
+  "version": "1.0.0",
+  "description": "Web application to help control the daily operations of a crane company",
+  "main": "app.js",
+  "scripts": {
+    "test": "app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/PauloSantosWebDev/OperationsControl.git"
+  },
+  "author": "Paulo Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PauloSantosWebDev/OperationsControl/issues"
+  },
+  "homepage": "https://github.com/PauloSantosWebDev/OperationsControl#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nunjucks": "^3.2.4",
+    "sqlite3": "^5.1.7"
+  }
+}
