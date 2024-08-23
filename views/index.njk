@@ -1,0 +1,22 @@
+{% extends 'layout.njk' %}
+
+{% block content %}    
+    {# <input type="date" id="datePicker" placeholder="Date">
+
+    <h2 id="selectedDate"></h2> #}
+    <div class="container mt-5">
+        <div class="row align-items-center">
+            <!-- h2 element centered on the screen -->
+            <div class="col text-center">
+                <h2 id="selectedDate">Select a Date:</h2>
+            </div>
+
+            <!-- Input element aligned to the right -->
+            <div class="col-auto">
+                <input type="date" id="datePicker" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/index.js"></script>
+{% endblock %}}

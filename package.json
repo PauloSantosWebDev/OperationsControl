@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/PauloSantosWebDev/OperationsControl#readme",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "express": "^4.19.2",
     "nunjucks": "^3.2.4",
     "sqlite3": "^5.1.7"

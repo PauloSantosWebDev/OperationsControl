@@ -25,3 +25,11 @@ app.use(express.static('views'));
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
+
+//-----------------------------------------------------------------------
+//Routes
+
+//Home page
+app.get('/', (req, res) => {
+    res.render('index.njk', {title: 'Home page'})
+})
