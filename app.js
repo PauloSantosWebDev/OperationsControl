@@ -31,5 +31,6 @@ app.listen(port, () => {
 
 //Home page
 app.get('/', (req, res) => {
-    res.render('index.njk', {title: 'Home page'})
+    // res.render('index.njk', {title: 'Home page'})
+    res.render('daysheet.njk', {title: 'Home page'})
 })

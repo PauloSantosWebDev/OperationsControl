@@ -10,50 +10,53 @@
         </head>
     {% endblock %}
     <body>
-        <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Day sheet</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Assets</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Asset type</a></li>
-                    <li><a class="dropdown-item" href="#">Assets</a></li>
-                    <li><a class="dropdown-item" href="#">Availability</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Location</a></li>
-                    <li><a class="dropdown-item" href="#">Obsolete</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Employees</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Employees</a></li>
-                    <li><a class="dropdown-item" href="#">New employee</a></li>
-                    <li><a class="dropdown-item" href="#">Qualifications</a></li>
-                    <li><a class="dropdown-item" href="#">Availability</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Former employee</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Qualifications</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">New qualification</a></li>
-                    <li><a class="dropdown-item" href="#">Qualifications</a></li>
-                    <li><a class="dropdown-item" href="#">Availability</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Former employee</a></li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Availability</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Assets</a></li>
-                    <li><a class="dropdown-item" href="#">Employees</a></li>
-                </ul>
-            </li>            
-        </ul>
+        <div class = "container">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Day sheet</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Assets</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Asset type</a></li>
+                        <li><a class="dropdown-item" href="#">Assets</a></li>
+                        <li><a class="dropdown-item" href="#">Availability</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Location</a></li>
+                        <li><a class="dropdown-item" href="#">Obsolete</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Employees</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Employees</a></li>
+                        <li><a class="dropdown-item" href="#">New employee</a></li>
+                        <li><a class="dropdown-item" href="#">Qualifications</a></li>
+                        <li><a class="dropdown-item" href="#">Availability</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Former employee</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Qualifications</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">New qualification</a></li>
+                        <li><a class="dropdown-item" href="#">Qualifications</a></li>
+                        <li><a class="dropdown-item" href="#">Availability</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Former employee</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Availability</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Assets</a></li>
+                        <li><a class="dropdown-item" href="#">Employees</a></li>
+                    </ul>
+                </li>            
+            </ul>
+        </div>
+
         <div class = "container">
             {% block content %}
             {% endblock %}

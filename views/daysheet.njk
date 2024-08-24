@@ -1,0 +1,34 @@
+{% extends 'layout.njk' %}
+
+{% block content %}    
+    <div class="container mt-5">
+        <div class="row align-items-center">
+            <!-- h2 element centered on the screen -->
+            <div class="col text-left">
+                <h2 id="selectedDate">Select a Date</h2>
+            </div>
+
+            <!-- Input element aligned to the right -->
+            <div class="col-auto">
+                <input type="date" id="datePicker" class="form-control">
+            </div>
+        </div>
+
+        <!-- New row for the three sections -->
+        <div class="container mt-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        {% for i in range(6, 25) %}
+                            <th>{{i % 24}}:00</th>
+                        {% endfor %}
+                        <th>Assets</th>
+                        <th>Crew</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <script src="/javascripts/index.js"></script>
+{% endblock %}

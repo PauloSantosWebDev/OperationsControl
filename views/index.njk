@@ -1,14 +1,11 @@
 {% extends 'layout.njk' %}
 
 {% block content %}    
-    {# <input type="date" id="datePicker" placeholder="Date">
-
-    <h2 id="selectedDate"></h2> #}
     <div class="container mt-5">
         <div class="row align-items-center">
             <!-- h2 element centered on the screen -->
-            <div class="col text-center">
-                <h2 id="selectedDate">Select a Date:</h2>
+            <div class="col text-left">
+                <h2 id="selectedDate">Select a Date</h2>
             </div>
 
             <!-- Input element aligned to the right -->
@@ -16,7 +13,57 @@
                 <input type="date" id="datePicker" class="form-control">
             </div>
         </div>
+
+        <!-- New row for the three sections -->
+        <div class="row mt-4">
+            <!-- First section: 70% width with vertical lines for hours -->
+            <div class="col-10 position-relative" style="padding: 25px; border: 1px solid black; height: 2000px;">
+                <div class="hour-lines d-flex h-100">
+                    <!-- Create 19 vertical lines from 6 AM to 12 AM (midnight) -->
+                    {% for i in range(6, 25) %}
+                    <div class="hour-line flex-grow-1 position-relative">
+                        <span class="hour-label">{{ i % 24 }}:00</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Second section: 15% width -->
+            <div class="col-1" style="border: 1px solid black;">
+                <!-- Content for the second section -->
+                Assets
+            </div>
+
+            <!-- Third section: 15% width -->
+            <div class="col-1" style="border: 1px solid black;">
+                <!-- Content for the third section -->
+                Crew
+            </div>
+        </div>
     </div>
 
     <script src="/javascripts/index.js"></script>
-{% endblock %}}
+    <style>
+        .hour-lines {
+            position: relative;
+        }
+        
+        .hour-line {
+            border-left: 1px solid #000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hour-label {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%) rotate(-90deg);
+            transform-origin: bottom;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+    </style>
+{% endblock %}
