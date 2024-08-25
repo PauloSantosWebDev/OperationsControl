@@ -61,6 +61,167 @@
             {% block content %}
             {% endblock %}
         </div>
+
+        <!-- Button to trigger modal -->
+        {# <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobCreation">
+            Open Form
+        </button> #}
+
+        <!-- Modal Structure -->
+        <div class="modal fade" id="jobCreation" tabindex="-1" aria-labelledby="jobCreationLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="jobCreationLabel">Job Creation Form</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                                <label for="inputClient" class="form-label">Client</label>
+                                <input type="text" class="form-control" id="inputClient">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputSupervisor" class="form-label">Supervisor</label>
+                                <input type="number" class="form-control" id="inputSupervisor">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputAddress" class="form-label">Job Address</label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputAssignar" class="form-label">Assignar Number</label>
+                                <input type="number" class="form-control" id="inputAssignar">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputExtraInfo" class="form-label">Induction required?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioYes" id="flexRadioYes">
+                                    <label class="form-check-label" for="flexRadioYes">
+                                        Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioNo" id="flexRadioNo">
+                                    <label class="form-check-label" for="flexRadioNo">
+                                        No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputExtraInfo" class="form-label">Comments</label>
+                                <textarea class="form-control" id="inputExtraInfo" rows="3"></textarea>
+                            </div>
+                            {# <div class="col-12">
+                                <label for="inputAddress2" class="form-label">Address 2</label>
+                                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                            </div> #}
+                            {# <div class="col-md-6">
+                                <label for="inputCity" class="form-label">City</label>
+                                <input type="text" class="form-control" id="inputCity">
+                            </div> #}
+                            <!--Stat and end time - Yard and Site-->
+                            <div class="col-md-3">
+                                <label for="inputStartYard" class="form-label">Yard Start</label>
+                                <select id="inputStartYard" class="form-select">
+                                    <option selected>Choose...</option>
+                                    {% for i in range(0, 24) %}
+                                        {% if i < 12 %}
+                                            <option>{{i}}:00am</option>
+                                            <option>{{i}}:30am</option>
+                                        {% else %}
+                                            <option>{{i % 24}}:00pm</option>
+                                            <option>{{i % 24}}:30pm</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputStartSite" class="form-label">Site Start</label>
+                                <select id="inputStartSite" class="form-select">
+                                    <option selected>Choose...</option>
+                                    {% for i in range(0, 24) %}
+                                        {% if i < 12 %}
+                                            <option>{{i}}:00am</option>
+                                            <option>{{i}}:30am</option>
+                                        {% else %}
+                                            <option>{{i % 24}}:00pm</option>
+                                            <option>{{i % 24}}:30pm</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputFinishSite" class="form-label">Site Finish</label>
+                                <select id="inputFinishSite" class="form-select">
+                                    <option selected>Choose...</option>
+                                    {% for i in range(0, 24) %}
+                                        {% if i < 12 %}
+                                            <option>{{i}}:00am</option>
+                                            <option>{{i}}:30am</option>
+                                        {% else %}
+                                            <option>{{i % 24}}:00pm</option>
+                                            <option>{{i % 24}}:30pm</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputFinishYard" class="form-label">Yard Finish</label>
+                                <select id="inputFinishYard" class="form-select">
+                                    <option selected>Choose...</option>
+                                    {% for i in range(0, 24) %}
+                                        {% if i < 12 %}
+                                            <option>{{i}}:00am</option>
+                                            <option>{{i}}:30am</option>
+                                        {% else %}
+                                            <option>{{i % 24}}:00pm</option>
+                                            <option>{{i % 24}}:30pm</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <!--Number of assets and people required in the job-->
+                            <div class="col-md-6">
+                                <label for="inputNumberAssets" class="form-label">Number of assets required</label>
+                                <select id="inputNumberAssets" class="form-select">
+                                    {% for i in range(1, 31) %}
+                                        <option>{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputNumberEmployees" class="form-label">Number of personnel required</label>
+                                <select id="inputNumberEmployees" class="form-select">
+                                    {% for i in range(1, 31) %}
+                                        <option>{{i}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            {# <div class="col-md-2">
+                                <label for="inputZip" class="form-label">Zip</label>
+                                <input type="text" class="form-control" id="inputZip">
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                    Check me out
+                                </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                            </div> #}
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="/js/bootstrap.bundle.js"></script>
         <script src="/umd/popper.min.js"></script>
     </body>

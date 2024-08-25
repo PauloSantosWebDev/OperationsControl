@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <!-- Input element aligned to the right -->
             <div class="col-auto">
-                <button type="button" class="btn btn-outline-dark">Create a job</button>
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#jobCreation">Create a job</button>
             </div>
             
             <!-- h2 element centered on the screen -->
@@ -37,10 +37,7 @@
                             {% else %}
                                 <th scope="col" colspan="2" style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: left" valign="middle">{{i % 12}}:00</th>
                             {% endif %}
-                            {# <th scope="col" style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: left" valign="middle">{{i % 12}}:00</th> #}
                         {% endfor %}
-                        {# <th scope="col" colspan="3" valign="middle">Assets</th>
-                        <th scope="col" colspan="3" valign="middle">Crew</th> #}
                     </tr>
                 </thead>
                 <tbody>
