@@ -1,112 +1,58 @@
 {% extends 'layout.njk' %}
 
- 
-
 {% block content %}    
-
     <div class="container mt-5">
-
         <div class="row align-items-center">
-
             <!-- Input element aligned to the right -->
-
             <div class="col-auto">
-
                 <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#jobCreation">Create a job</button>
-
             </div>
-
-           
 
             <!-- h2 element centered on the screen -->
-
             <div class="col text-centered" style="text-align: center;">
-
                 <h2 id="selectedDate">Select a Date</h2>
-
             </div>
-
- 
 
             <!-- Input element aligned to the right -->
-
             <div class="col-auto">
-
                 <input type="date" id="datePicker" class="form-control">
-
             </div>
-
         </div>
 
- 
-
         <!-- New row for the three sections -->
-
         <div class="container mt-4" style="padding: 0px;">
-
             <table class="table table-hover table-bordered">
-
                 <thead>
-
                     <tr>
-
                         <th scope="col" colspan="12" valign="middle" style="text-align: center;">am</th>
-
                         <th scope="col" colspan="24" valign="middle" style="text-align: center;">pm</th>
-
                         <th scope="col" colspan="12" valign="middle" style="text-align: center;">am</th>
-
                         <th scope="col" colspan="4" rowspan="2" valign="middle" style="text-align: center;">Assets</th>
-
                         <th scope="col" colspan="4" rowspan="2" valign="middle" style="text-align: center;">Crew</th>
-
                     </tr>
-
                     <tr>
-
                         {% for i in range(6, 30) %}
-
                             {% if i == 12 %}
-
                                 <th scope="col" colspan="2" style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: left" valign="middle">{{i}}:00</th>
-
                             {% else %}
-
                                 <th scope="col" colspan="2" style="writing-mode: vertical-rl; transform: rotate(180deg); text-align: left" valign="middle">{{i % 12}}:00</th>
-
                             {% endif %}
-
                         {% endfor %}
-
                     </tr>
-
                 </thead>
 
                 <tbody>
-
                     <tr>
-
                         {% for i in range(1, 49)%}
-
                             <td scope="col" colspan="1" valign="middle"></td>
-
                         {% endfor %}
-
                         <td scope="col" colspan="4" valign="middle">CSH071-400T</td>
-
                         <td scope="col" colspan="4" valign="middle">John Smith</td>
-
                     </tr>
-
                 </tbody>
-
             </table>
-
         </div>
-
     </div>
-
- 
 
     <script src="/javascripts/daysheet.js"></script>
 
