@@ -48,9 +48,13 @@ function AssetPersonnelFields(qAssets = 0, qPersonnel = 0) {
             </select>
         </div>`
     }
-    document.getElementById('formPersonnel').innerHTML = accumulator
+    document.getElementById('formPersonnel').innerHTML = accumulator;
+    return
 }
 
 //Event listener
-document.getElementById('inputNumberAssets').addEventListener('change', createFields);
-document.getElementById('inputNumberEmployees').addEventListener('change', createFields);
+// document.getElementById('inputNumberAssets').addEventListener('change', createFields);
+// document.getElementById('inputNumberEmployees').addEventListener('change', createFields);
+document.getElementById('btnAllocationAssets').addEventListener('click', createFields);
+document.getElementById('btnAllocationPersonnel').addEventListener('click', createFields);
+
