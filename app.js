@@ -35,3 +35,8 @@ app.get('/', (req, res) => {
     // res.render('daysheet.njk', {title: 'Home page'})
     res.render('formsdaysheet.njk', {title: 'Daysheet'})
 })
+
+//New client page
+app.get('/client', (req, res) => {
+    res.render('client.njk', {title: 'New Client'})
+})
