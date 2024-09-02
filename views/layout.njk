@@ -18,47 +18,65 @@
             <ul class="nav justify-content-start">
                 <li><img src="/images/logo.png" height="50"></li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Day sheet</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Assets</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Asset type</a></li>
-                        <li><a class="dropdown-item" href="#">Assets</a></li>
-                        <li><a class="dropdown-item" href="#">Availability</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Location</a></li>
-                        <li><a class="dropdown-item" href="#">Obsolete</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Employees</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Employees</a></li>
-                        <li><a class="dropdown-item" href="#">New employee</a></li>
-                        <li><a class="dropdown-item" href="#">Qualifications</a></li>
-                        <li><a class="dropdown-item" href="#">Availability</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Former employee</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Qualifications</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">New qualification</a></li>
-                        <li><a class="dropdown-item" href="#">Qualifications</a></li>
-                        <li><a class="dropdown-item" href="#">Availability</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Former employee</a></li>
-                    </ul>
+                    <a class="nav-link active" aria-current="page" href="/">Allocation history</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Availability</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Assets</a></li>
-                        <li><a class="dropdown-item" href="#">Employees</a></li>
+                        <li><a class="dropdown-item" style="color: black;" href="#">Assets</a></li>
+                        <li><a class="dropdown-item mystyle" href="#">Employees</a></li>
                     </ul>
-                </li>            
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Day sheet</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Delete</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Delete asset</a></li>
+                        <li><a class="dropdown-item" href="#">Delete asset type</a></li>
+                        <li><a class="dropdown-item" href="#">Delete client</a></li>
+                        <li><a class="dropdown-item" href="#">Delete employee</a></li>
+                        <li><a class="dropdown-item" href="#">Delete function</a></li>
+                        <li><a class="dropdown-item" href="#">Delete qualification</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Delete location</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Link</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Asset-Asset Type</a></li>
+                        <li><a class="dropdown-item" href="#">Employee-function</a></li>
+                        <li><a class="dropdown-item" href="#">Employee-qualification</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Register</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">New asset</a></li>
+                        <li><a class="dropdown-item" href="#">New asset type</a></li>
+                        <li><a class="dropdown-item" href="#">New client</a></li>
+                        <li><a class="dropdown-item" href="#">New employee</a></li>
+                        <li><a class="dropdown-item" href="#">New function</a></li>
+                        <li><a class="dropdown-item" href="#">New qualification</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Asset location</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Update</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Update asset</a></li>
+                        <li><a class="dropdown-item" href="#">Update asset type</a></li>
+                        <li><a class="dropdown-item" href="#">Update client</a></li>
+                        <li><a class="dropdown-item" href="#">Update employee</a></li>
+                        <li><a class="dropdown-item" href="#">Update function</a></li>
+                        <li><a class="dropdown-item" href="#">Update qualification</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Update location</a></li>
+                    </ul>
+                </li>     
             </ul>
         </div>
 
@@ -221,5 +239,9 @@
         <script src="/js/bootstrap.bundle.js"></script>
         <script src="/umd/popper.min.js"></script>
         <script src="/javascripts/daysheet.js"></script>
+        <style>
+            .nav-item a {color: #E63C2B; font-weight: bold;}
+            .nav-item a.mystyle {color: #181617; font-weight: bold;}
+        </style>
     </body>
 </html>
