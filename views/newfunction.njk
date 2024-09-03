@@ -1,0 +1,20 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-12">
+                <label for="inputFunction" class="form-label">Function</label>
+                <input type="text" class="form-control" id="inputFunction" placeholder="Rigger">
+            </div>
+            <div class="mb-3">
+                <label for="functionDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="functionDescription" rows="3" placeholder="Please describe what is expected for this function."></textarea>
+            </div>
+            <div class="col-12" style="text-align: right;">
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="submit" class="btn btn-danger me-md-2">Register</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -37,6 +37,27 @@ app.get('/', (req, res) => {
 })
 
 //New client page
-app.get('/client', (req, res) => {
-    res.render('client.njk', {title: 'New Client'})
+app.get('/newclient', (req, res) => {
+    res.render('newclient.njk', {title: 'New Client'})
 })
+
+//New assets page
+app.get('/newasset', (req, res) => {
+    res.render('newasset.njk', {title: 'Asset Type'})
+})
+
+//New asset type page
+app.get('/newassettype', (req, res) => {
+    res.render('newassettype.njk', {title: 'Asset Type'})
+})
+
+//New employee page
+app.get('/newemployee', (req, res) => {
+    res.render('newemployee.njk', {title: 'New employee'})
+})
+
+//New function page
+app.get('/newfunction', (req, res) => {
+    res.render('newfunction.njk', {title: "New Function"})
+})
+
