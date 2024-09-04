@@ -1,0 +1,45 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">Employee's availability form</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-3">
+                <label for="inputAvailabilityEmployee" class="form-label">Employee</label>
+                <select class="form-select">
+                    <option>Employee1</option>
+                    <option>Employee2</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputLeaveReason" class="form-label">Type of leave</label>
+                <select class="form-select">
+                    <option>Leave1</option>
+                    <option>Leave2</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputStartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="inputStartDate">
+            </div>
+            <div class="col-md-3">
+                <label for="inputEndDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="inputEndDate">
+            </div>
+            <div class="mb-3">
+                <label for="employeeAvailabilityDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="descriptionEmployeeAvailability" rows="3"></textarea>
+            </div>
+            <div class="col-12" style="text-align: right;">
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="submit" class="btn btn-danger me-md-2">Submit</button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div class="container mt-5">
+        <h1>Area to show the data</h1>
+    </div>
+{% endblock %}

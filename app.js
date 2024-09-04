@@ -105,3 +105,28 @@ app.get('/upddelqualification', (req, res) => {
 app.get('/updatelocation', (req, res) => {
     res.render('updatelocation.njk', {title: "Update Asset Location"})
 })
+
+//Update link asset to asset type form
+app.get('/linkassettype', (req, res) => {
+    res.render('linkassettype.njk', {title: "Link Asset-Asset type"})
+})
+
+//Update link employee to funciton form
+app.get('/linkemployeefunction', (req, res) => {
+    res.render('linkemployeefunction.njk', {title: "Link Employee-Function"})
+})
+
+//Update link employee to qualification form
+app.get('/linkemployeequalification', (req, res) => {
+    res.render('linkemployeequalification.njk', {title: "Link Employee-Qualification"})
+})
+
+//Employee's availability form
+app.get('/availabilityemployee', (req, res) => {
+    res.render('availabilityemployee.njk', {title: "Employees' availability"})
+})
+
+//Assets' availability form
+app.get('/availabilityasset', (req, res) => {
+    res.render('availabilityasset.njk', {title: "Assets' availability"})
+})
