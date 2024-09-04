@@ -70,3 +70,38 @@ app.get('/newqualification', (req, res) => {
 app.get('/newlocation', (req, res) => {
     res.render('newlocation.njk', {title: "New Asset Location"})
 })
+
+//Update/Delete assets form
+app.get('/upddelasset', (req, res) => {
+    res.render('upddelasset.njk', {title: "Update/Delete Assets"})
+})
+
+//Update/Delete assets type form
+app.get('/upddelassettype', (req, res) => {
+    res.render('upddelassettype.njk', {title: "Update/Delete Assets type"})
+})
+
+//Update/Delete client form
+app.get('/upddelclient', (req, res) => {
+    res.render('upddelclient.njk', {title: "Update/Delete Client"})
+})
+
+//Update/Delete employee form
+app.get('/upddelemployee', (req, res) => {
+    res.render('upddelemployee.njk', {title: "Update/Delete Employee"})
+})
+
+//Update/Delete function form
+app.get('/upddelfunction', (req, res) => {
+    res.render('upddelfunction.njk', {title: "Update/Delete Function"})
+})
+
+//Update/Delete qualification form
+app.get('/upddelqualification', (req, res) => {
+    res.render('upddelqualification.njk', {title: "Update/Delete Qualification"})
+})
+
+//Update location form
+app.get('/updatelocation', (req, res) => {
+    res.render('updatelocation.njk', {title: "Update Asset Location"})
+})

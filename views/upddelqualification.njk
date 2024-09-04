@@ -1,0 +1,43 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">Update/delete qualifications form</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-4">
+                <label for="inputSearchQualification" class="form-label">Select Qualification</label>
+                <select class="form-select">
+                    <option>Text1</option>
+                    <option>Text2</option>
+                </select>
+            </div>
+            <hr>
+            <div class="col-md-8">
+                <label for="inputQualification" class="form-label">Qualification</label>
+                <input type="text" class="form-control" id="inputQualification" placeholder="Semi driver">
+            </div>
+            <div class="col-md-4">
+                <label for="inputQualificationCode" class="form-label">Qualification Code</label>
+                <input type="text" class="form-control" id="inputQualificationCode" placeholder="MC">
+            </div>
+            <div class="mb-3" style="margin-bottom: 0px;">
+                <label for="functionDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="functionDescription" rows="3" placeholder="Please describe what is expected for this function."></textarea>
+            </div>
+            <div class="col-6" style="margin-top: 0px;">
+                <a href="https://www.safework.sa.gov.au/licence-and-registration/apply-renew/high-risk-work-licences/hrw-classes" target="_blank">In doubt? Check SA Licenses</a>
+            </div>
+            <div class="col-6" style="text-align: right;">
+                <button type="button" class="btn btn-danger me-md-2">Delete</button>
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="submit" class="btn btn-danger me-md-2">Update</button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div class="container mt-5">
+        <h1>Area to show the data</h1>
+    </div>
+{% endblock %}

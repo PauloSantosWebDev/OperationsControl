@@ -1,0 +1,73 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">New clients form</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-4">
+                <label for="inputSearchClient" class="form-label">Select Client</label>
+                <select class="form-select">
+                    <option>Text1</option>
+                    <option>Text2</option>
+                </select>
+            </div>
+            <hr>
+            <div class="col-md-6">
+                <label for="inputClientName" class="form-label">Client Name</label>
+                <input type="text" class="form-control" id="inputClientName">
+            </div>
+            <div class="col-md-6">
+                <label for="inputClientEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputClientEmail">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+            </div>
+            {# <div class="col-12">
+                <label for="inputAddress2" class="form-label">Address 2</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            </div> #}
+            <div class="col-md-6">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="col-md-4">
+                <label for="inputState" class="form-label">State</label>
+                <select id="inputState" class="form-select">
+                    <option value="NSW">New South Wales</option>
+                    <option value="VIC">Victoria</option>
+                    <option value="QLD">Queensland</option>
+                    <option value="SA" selected>South Australia</option>
+                    <option value="WA">Western Australia</option>
+                    <option value="TAS">Tasmania</option>
+                    <option value="ACT">Australian Capital Territory</option>
+                    <option value="NT">Northern Territory</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="inputPostcode" class="form-label">Postcode</label>
+                <input type="text" class="form-control" id="inputPostcode">
+            </div>
+            {# <div class="col-12">
+                <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                    Check me out
+                </label>
+                </div>
+            </div> #}
+            <div class="col-12" style="text-align: right;">
+                <button type="button" class="btn btn-danger me-md-2">Delete</button>
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="submit" class="btn btn-danger me-md-2">Update</button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div class="container mt-5">
+        <h1>Area to show the data</h1>
+    </div>
+{% endblock %}
