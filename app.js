@@ -61,3 +61,12 @@ app.get('/newfunction', (req, res) => {
     res.render('newfunction.njk', {title: "New Function"})
 })
 
+//New qualification page
+app.get('/newqualification', (req, res) => {
+    res.render('newqualification.njk', {title: "New Qualification"})
+})
+
+//New asset location page
+app.get('/newlocation', (req, res) => {
+    res.render('newlocation.njk', {title: "New Asset Location"})
+})

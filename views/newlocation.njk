@@ -1,0 +1,41 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">Assets location form</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-3">
+                <label for="inputCSAssetId" class="form-label">CS Asset ID</label>
+                <select class="form-select">
+                    <option>CSH ???</option>
+                    <option>Option 2</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputClientId" class="form-label">Client</label>
+                <select class="form-select">
+                    <option>Client ???</option>
+                    <option>Option 2</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputStartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="inputStartDate">
+            </div>
+            <div class="col-md-3">
+                <label for="inputEndDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="inputEndDate">
+            </div>
+            <div class="mb-3">
+                <label for="assetDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="assetDescription" rows="3"></textarea>
+            </div>
+            <div class="col-12" style="text-align: right;">
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="submit" class="btn btn-danger me-md-2">Register</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
