@@ -170,7 +170,6 @@ app.get('/availabilityasset', (req, res) => {
 
 //Employees registration area
 app.post('/newemployee', (req, res) => {
-    console.log('Print something');
     const fname = req.body.fname;
     const lname = req.body.lname;
     const email = req.body.email;
@@ -178,8 +177,6 @@ app.post('/newemployee', (req, res) => {
     const address = req.body.address;
     const suburb = req.body.suburb;
     const postcode = req.body.postcode;
-
-    console.log(`The req.body is: ${fname}`);
 
     db.run('INSERT INTO employees (first_name, last_name, address, suburb, postcode, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?)', [fname, lname, email, phone, address, suburb, postcode], (err) => {
         if (err) {

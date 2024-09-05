@@ -8,7 +8,11 @@ async function insertEmployees () {
     const suburb = document.getElementById('inputSuburb').value;
     const postcode = document.getElementById('inputPostcode').value;
 
-    alert(`fname is: ${fname}`);
+    if(!fname || !lname || !email || !phone || !address || !suburb || !postcode) {
+        alert("All fields required!");
+        return
+    }
+
     const options = {
         method: 'POST',
         headers: {
