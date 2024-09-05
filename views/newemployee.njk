@@ -5,7 +5,7 @@
         <h1 style="color: #E63C2B; font-weight: bold;">New employees form</h1>
     </div>
     <div class="container mt-5">
-        <form class="row g-3">
+        <form class="row g-3"> <!--action="/newemployee" method="post" -->
             <div class="col-md-3">
                 <label for="inputEmployeeFirstName" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="inputEmployeeFirstName" placeholder="John">
@@ -15,8 +15,8 @@
                 <input type="text" class="form-control" id="inputEmployeeLastName" placeholder="Smith">
             </div>
             <div class="col-md-4">
-                <label for="inputClientEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputClientEmail" placeholder="example@craneservices.com.au">
+                <label for="inputEmployeeEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmployeeEmail" placeholder="example@craneservices.com.au">
             </div>
             <div class="col-md-2">
                 <label for="inputEmployeePhone" class="form-label">Phone</label>
@@ -36,8 +36,10 @@
             </div>
             <div class="col-12" style="text-align: right;">
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Register</button>
+                <button type="submit" class="btn btn-danger me-md-2" id="js-new-employee-btn">Register</button> <!--id="js-new-employee-btn"-->
             </div>
         </form>
     </div>
+
+    <script src="/javascripts/newemployee.js"></script>
 {% endblock %}

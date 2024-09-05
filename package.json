@@ -19,7 +19,9 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "nunjucks": "^3.2.4",
+    "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }
 }

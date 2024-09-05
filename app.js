@@ -1,6 +1,8 @@
 const express = require('express'); //the require() function imports the Express framework, making its functionalities available.
 const app = express(); //used to create an instance/object of the Express framework. This instance is a fresh object where you can start defining routes, middleware, and configuration.
 const nunjucks = require('nunjucks');
+const bodyParser = require('body-parser');
+const session = require('express-session');
 const db = require('./db');
 const port = 3000;
 
@@ -17,6 +19,28 @@ app.set('view engine', 'njk'); //set nunjucks as the view engine
 app.use(express.static('node_modules/bootstrap/dist'));
 app.use(express.static('public'));
 app.use(express.static('views'));
+
+//Middleware to parse request body
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(session({
+  secret: 'cs-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+
+//Checking tables data
+db.all('SELECT * FROM employees', (err, rows) => {
+    if (err) {
+        throw err;
+    }
+
+    rows.forEach(row => {
+        console.log(row);
+    })
+})
 
 
 //-----------------------------------------------------------------------
@@ -139,4 +163,31 @@ app.get('/availabilityemployee', (req, res) => {
 //Assets' availability form
 app.get('/availabilityasset', (req, res) => {
     res.render('availabilityasset.njk', {title: "Assets' availability"})
+})
+
+//-------------------------------------------------------------------------------------
+//Post methods
+
+//Employees registration area
+app.post('/newemployee', (req, res) => {
+    console.log('Print something');
+    const fname = req.body.fname;
+    const lname = req.body.lname;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const address = req.body.address;
+    const suburb = req.body.suburb;
+    const postcode = req.body.postcode;
+
+    console.log(`The req.body is: ${fname}`);
+
+    db.run('INSERT INTO employees (first_name, last_name, address, suburb, postcode, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?)', [fname, lname, email, phone, address, suburb, postcode], (err) => {
+        if (err) {
+            console.error(err.message);
+            res.status(500).send("Error inserting data in employees' table.");
+        } else {
+            res.status(200);
+            console.log("Data inserted succssfully in employees' table.");
+        }
+    });
 })

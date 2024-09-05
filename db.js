@@ -57,3 +57,5 @@ db.run('CREATE TABLE IF NOT EXISTS jobs (job_id INTEGER PRIMARY KEY AUTOINCREMEN
 
 //Allocations table
 db.run('CREATE TABLE IF NOT EXISTS allocations (allocation_id INTEGER PRIMARY KEY AUTOINCREMENT, job_id INTEGER, asset_id INTEGER, function_id INTEGER, leave_yard_time TEXT NOT NULL, start_time_site TEXT NOT NULL, finish_time_site TEXT NOT NULL, back_yard_time TEXT NOT NULL, details TEXT, inducted INTEGER NOT NULL, FOREIGN KEY (function_id) REFERENCES functions(function_id), FOREIGN KEY (asset_id) REFERENCES assets(asset_id), FOREIGN KEY (job_id) REFERENCES jobs(job_id))');
+
+module.exports = db;
