@@ -7,20 +7,28 @@
     <div class="container mt-5">
         <form class="row g-3">
             <div class="col-md-4">
-                <label for="inputSearchEmployee" class="form-label">Select Employee</label>
+                <label for="inputSearchAsset" class="form-label">Select Asset</label>
                 <select class="form-select">
                     <option>Text1</option>
                     <option>Text2</option>
                 </select>
             </div>
             <hr>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="inputEmployeeFirstName" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="inputEmployeeFirstName" placeholder="John">
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="inputEmployeeLastName" class="form-label">Last Name</label>
                 <input type="text" class="form-control" id="inputEmployeeLastName" placeholder="Smith">
+            </div>
+            <div class="col-md-4">
+                <label for="inputClientEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputClientEmail" placeholder="example@craneservices.com.au">
+            </div>
+            <div class="col-md-2">
+                <label for="inputEmployeePhone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="inputEmployeePhone" placeholder="0000 000 000">
             </div>
             <div class="col-6">
                 <label for="inputAddress" class="form-label">Address</label>
@@ -34,17 +42,10 @@
                 <label for="inputPostcode" class="form-label">Postcode</label>
                 <input type="text" class="form-control" id="inputPostcode" placeholder="5013">
             </div>
-            <div class="col-md-4">
-                <label for="inputEmployeePhone" class="form-label">Phone</label>
-                <input type="text" class="form-control" id="inputEmployeePhone" placeholder="0000 000 000">
-            </div>
-            <div class="col-md-8">
-                <label for="inputClientEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputClientEmail" placeholder="example@craneservices.com.au">
-            </div>
             <div class="col-12" style="text-align: right;">
+                <button type="button" class="btn btn-danger me-md-2">Delete</button>
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Register</button>
+                <button type="submit" class="btn btn-danger me-md-2">Update</button>
             </div>
         </form>
     </div>

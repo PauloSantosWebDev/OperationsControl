@@ -11,7 +11,7 @@ let db = new sqlite3.Database("control.sqlite", (err) => {
 //Tables creation area
 
 //Clients table
-db.run('CREATE TABLE IF NOT EXISTS clients (client_id INTEGER PRIMARY KEY AUTOINCREMENT, client_name TEXT NOT NULL, email TEXT, address TEXT NOT NULL, city TEXT NOT NULL, state TEXT, postcode TEXT NOT NULL)');
+db.run('CREATE TABLE IF NOT EXISTS clients (client_id INTEGER PRIMARY KEY AUTOINCREMENT, client_name TEXT NOT NULL, email TEXT, phone TEXT NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, state TEXT, postcode TEXT NOT NULL)');
 
 //Assets table
 db.run('CREATE TABLE IF NOT EXISTS assets (asset_id INTEGER PRIMARY KEY AUTOINCREMENT, cs_asset_id TEXT NOT NULL, asset_name TEXT NOT NULL, asset_type TEXT NOT NULL, description TEXT, FOREIGN KEY (asset_type) REFERENCES assets_types(asset_type_id))');
@@ -43,23 +43,17 @@ db.run('CREATE TABLE IF NOT EXISTS employees_functions (function_id INTEGER NOT 
 //Assets-Assets types table
 db.run('CREATE TABLE IF NOT EXISTS asset_assettype (asset_id INT, asset_type_id INT, FOREIGN KEY (asset_id) REFERENCES assets(asset_id), FOREIGN KEY (asset_type_id) REFERENCES assets_types(asset_type_id))');
 
-// //Assets types table
-// db.run('CREATE TABLE IF NOT EXISTS assets_types (type_id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT NOT NULL)');
+//Supervisors table
+db.run('CREATE TABLE IF NOT EXISTS supervisors (supervisor_id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL, email TEXT, phone TEXT NOT NULL)');
 
-// //Assets main table
-// db.run('CREATE TABLE IF NOT EXISTS assets (asset_id INTEGER PRIMARY KEY AUTOINCREMENT, cs_asset_id TEXT NOT NULL, type TEXT, model TEXT, description TEXT, FOREIGN KEY (type) REFERENCES assets_types(type))');
+//Reserve table
+db.run('CREATE TABLE IF NOT EXISTS reserves (reserve_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_id INTEGER, client_id INTEGER, supervisor_id INTEGER, start_date TEXT NOT NULL, final_date TEXT NOT NULL, status TEXT, FOREIGN KEY (asset_id) REFERENCES assets(asset_id), FOREIGN KEY (client_id) REFERENCES clients(client_id), FOREIGN KEY (supervisor_id) REFERENCES supervisors(supervisor_id))');
 
-// //Employee table - the status is used to show current and obsolete employees
-// db.run('CREATE TABLE IF NOT EXISTS employees (employee_id INTEGER PRIMARY KEY AUTOINCREMENT, fname TEXT NOT NULL, lname TEXT NOT NULL, status TEXT NOT NULL)');
+//Orders table
+db.run('CREATE TABLE IF NOT EXISTS orders (order_id INTEGER PRIMARY KEY AUTOINCREMENT, reserve_id INTEGER, start_date TEXT NOT NULL, final_date TEXT NOT NULL, client_id INTEGER, supervisor_id INTEGER, address TEXT NOT NULL, assignar_number INTEGER, induction_req INTEGER NOT NULL, comments TEXT, FOREIGN KEY (reserve_id) REFERENCES reserves(reserve_id), FOREIGN KEY (client_id) REFERENCES clients(client_id), FOREIGN KEY (supervisor_id) REFERENCES supervisors(supervisor_id))');
 
-// //Employee's personal details table
-// db.run('CREATE TABLE IF NOT EXISTS personal_details (employee_id INTEGER, phone TEXT, address TEXT, FOREIGN KEY (employee_id) REFERENCES employees (employee_id))');
+//Jobs table
+db.run('CREATE TABLE IF NOT EXISTS jobs (job_id INTEGER PRIMARY KEY AUTOINCREMENT, job_number INTEGER NOT NULL, order_id INTEGER, date TEXT NOT NULL, address TEXT NOT NULL, details TEXT NOT NULL, FOREIGN KEY (order_id) REFERENCES orders(order_id))');
 
-// //Qualifications table
-// db.run('CREATE TABLE IF NOT EXISTS qualifications (qualification_id INTEGER PRIMARY KEY AUTOINCREMENT, qualification TEXT NOT NULL, description TEXT)');
-
-// //Employee's qualifications table
-// db.run('CREATE TABLE IF NOT EXISTS employee_qualifications (employee_id INTEGER, qualification_id TEXT, FOREIGN KEY (employee_id) REFERENCES employees (employee_id), FOREIGN KEY (qualification_id) REFERENCES qualifications (qualification_id))');
-
-// //Job's main table
-// db.run('CREATE TABLE IF NOT EXISTS jobs (job_id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT NOT NULL)');
+//Allocations table
+db.run('CREATE TABLE IF NOT EXISTS allocations (allocation_id INTEGER PRIMARY KEY AUTOINCREMENT, job_id INTEGER, asset_id INTEGER, function_id INTEGER, leave_yard_time TEXT NOT NULL, start_time_site TEXT NOT NULL, finish_time_site TEXT NOT NULL, back_yard_time TEXT NOT NULL, details TEXT, inducted INTEGER NOT NULL, FOREIGN KEY (function_id) REFERENCES functions(function_id), FOREIGN KEY (asset_id) REFERENCES assets(asset_id), FOREIGN KEY (job_id) REFERENCES jobs(job_id))');

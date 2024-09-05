@@ -71,6 +71,11 @@ app.get('/newlocation', (req, res) => {
     res.render('newlocation.njk', {title: "New Asset Location"})
 })
 
+//New supervisor page
+app.get('/newsupervisor', (req, res) => {
+    res.render('newsupervisor.njk', {title: "New Supervisor"})
+})
+
 //Update/Delete assets form
 app.get('/upddelasset', (req, res) => {
     res.render('upddelasset.njk', {title: "Update/Delete Assets"})
@@ -99,6 +104,11 @@ app.get('/upddelfunction', (req, res) => {
 //Update/Delete qualification form
 app.get('/upddelqualification', (req, res) => {
     res.render('upddelqualification.njk', {title: "Update/Delete Qualification"})
+})
+
+//New supervisor page
+app.get('/upddelsupervisor', (req, res) => {
+    res.render('upddelsupervisor.njk', {title: "Update/delete Supervisor"})
 })
 
 //Update location form
