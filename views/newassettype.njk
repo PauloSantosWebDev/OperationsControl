@@ -7,8 +7,8 @@
     <div class="container mt-5">
         <form class="row g-3">
             <div class="col-md-12">
-                <label for="inputClientName" class="form-label">Asset type</label>
-                <input type="text" class="form-control" id="inputClientName">
+                <label for="inputAssetType" class="form-label">Asset type</label>
+                <input type="text" class="form-control" id="inputAssetType">
             </div>
             <div class="mb-3">
                 <label for="assetTypeDescription" class="form-label">Description</label>
@@ -16,8 +16,10 @@
             </div>
             <div class="col-12" style="text-align: right;">
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Register</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-new-asset-type-btn">Register</button>
             </div>
         </form>
     </div>
+
+    <script src="/javascripts/newassettype.js"></script>
 {% endblock %}

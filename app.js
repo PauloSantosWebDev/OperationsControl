@@ -32,15 +32,15 @@ app.use(session({
 }))
 
 //Checking tables data
-db.all('SELECT * FROM assets', (err, rows) => {
-    if (err) {
-        throw err;
-    }
+// db.all('SELECT * FROM assets', (err, rows) => {
+//     if (err) {
+//         throw err;
+//     }
 
-    rows.forEach(row => {
-        console.log(row);
-    })
-})
+//     rows.forEach(row => {
+//         console.log(row);
+//     })
+// })
 
 
 //-----------------------------------------------------------------------
@@ -180,14 +180,14 @@ app.post('/newemployee', (req, res) => {
 
     db.run('INSERT INTO employees (first_name, last_name, address, suburb, postcode, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?)', [fname, lname, email, phone, address, suburb, postcode], (err) => {
         if (err) {
-            res.status(400).json({body: "Error inserting data in assets' table."});
+            res.status(400).json({body: "Error inserting data into the employees' table."});
         } else {
-            res.status(200).json({body: "Data inserted succssfully in assets' table."});
+            res.status(200).json({body: "Data inserted successfully into the employees' table."});
         }
     });
 })
 
-//Employees registration area
+//Assets registration area
 app.post('/newasset', (req, res) => {
     const craneServicesId = req.body.craneServicesId;
     const assetName = req.body.assetName;
@@ -196,9 +196,72 @@ app.post('/newasset', (req, res) => {
 
     db.run('INSERT INTO assets (cs_asset_id, asset_name, asset_type, description) VALUES (?, ?, ?, ?)', [craneServicesId, assetName, assetType, description], (err) => {
         if (err) {
-            res.status(400).json({body: "Error inserting data in assets' table."});
+            res.status(400).json({body: "Error inserting data into the assets' table."});
         } else {
-            res.status(200).json({body: "Data inserted succssfully in assets' table."});
+            res.status(200).json({body: "Data inserted successfully into the assets' table."});
+        }
+    });
+})
+
+//Asset types registration area
+app.post('/newassettype', (req, res) => {
+    const assetType = req.body.assetType;
+    const description = req.body.description;
+
+    db.run('INSERT INTO assets_types (asset_type, description) VALUES (?, ?)', [assetType, description], (err) => {
+        if (err) {
+            res.status(400).json({body: "Error inserting data into the assets type' table."});
+        } else {
+            res.status(200).json({body: "Data inserted successfully into the assets type' table."});
+        }
+    });
+})
+
+//Client registration area
+app.post('/newclient', (req, res) => {
+    const clientName = req.body.clientName;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const address = req.body.address;
+    const city = req.body.city;
+    const state = req.body.state;
+    const postcode = req.body.postcode;
+
+    db.run('INSERT INTO clients (client_name, email, phone, address, city, state, postcode) VALUES (?, ?, ?, ?, ?, ?, ?)', [clientName, email, phone, address, city, state, postcode], (err) => {
+        if (err) {
+            res.status(400).json({body: "Error inserting data into the clients' table."});
+        } else {
+            res.status(200).json({body: "Data inserted successfully into the clients' table."});
+        }
+    });
+})
+
+//Functions registration area
+app.post('/newfunction', (req, res) => {
+    const func = req.body.func;
+    const description = req.body.description;
+
+    db.run('INSERT INTO functions (function, description) VALUES (?, ?)', [func, description], (err) => {
+        if (err) {
+            res.status(400).json({body: "Error inserting data into the functions' table."});
+        } else {
+            res.status(200).json({body: "Data inserted successfully into the functions' table."});
+        }
+    });
+})
+
+//Supervisors registration area
+app.post('/newsupervisor', (req, res) => {
+    const fname = req.body.fname;
+    const lname = req.body.lname;
+    const email = req.body.email;
+    const phone = req.body.phone;
+
+    db.run('INSERT INTO supervisors (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)', [fname, lname, email, phone], (err) => {
+        if (err) {
+            res.status(400).json({body: "Error inserting data into the employees' table."});
+        } else {
+            res.status(200).json({body: "Data inserted successfully into the employees' table."});
         }
     });
 })
