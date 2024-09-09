@@ -102,7 +102,13 @@ app.get('/newsupervisor', (req, res) => {
 
 //Update/Delete assets form
 app.get('/upddelasset', (req, res) => {
-    res.render('upddelasset.njk', {title: "Update/Delete Assets"})
+    db.all('SELECT * FROM assets', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({assetId: row.asset_id, csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
+        res.render('upddelasset.njk', {title: "Update/Delete Assets", toParse});
+    })
 })
 
 //Update/Delete assets type form

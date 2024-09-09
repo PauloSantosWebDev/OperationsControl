@@ -49,5 +49,35 @@
     <hr>
     <div class="container mt-5">
         <h1>Area to show the data</h1>
+        <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" valign="middle" style="text-align: center;">Number</th>
+                        <th scope="col" valign="middle" style="text-align: center;">ID</th>
+                        <th scope="col" valign="middle" style="text-align: center;">Name</th>
+                        <th scope="col" valign="middle" style="text-align: center;">Type</th>
+                        <th scope="col" valign="middle" style="text-align: center;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in toParse %}
+                        <tr>
+                            <td scope="col" valign="middle" style="text-align: center;">{{t.assetId}}</td>
+                            <td scope="col" valign="middle" style="text-align: center;">{{t.csId}}</td>
+                            <td scope="col" valign="middle" style="text-align: center;">{{t.assetName}}</td>
+                            <td scope="col" valign="middle" style="text-align: center;">{{t.assetType}}</td>
+                            <td scope="col" valign="middle" style="text-align: center;">{{t.description}}</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        
+                    </tr>
+                </tbody>
+        </table>
+        {# <div id="upddeldata">
+            <table>
+                
+            </table>
+        </div> #}
     </div>
 {% endblock %}
