@@ -102,13 +102,33 @@ app.get('/newsupervisor', (req, res) => {
 
 //Update/Delete assets form
 app.get('/upddelasset', (req, res) => {
-    db.all('SELECT * FROM assets', (err, rows) => {
-        if (err) {
-            return res.status(500).send('Database error');
-        }
-        const toParse = rows.map(row => ({assetId: row.asset_id, csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
-        res.render('upddelasset.njk', {title: "Update/Delete Assets", toParse});
-    })
+    const checker = req.body.load;
+    const asset = req.body.asset;
+    if (checker) {
+        db.all(`SELECT * FROM assets WHERE cs_asset_id = ${asset}`, (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+                // res.status(400).json({body: "Error inserting data into the employees' table."});
+            } else {
+                const toLoad = rows.map(row => ({csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
+                res.status(200).json({body: toLoad});
+            }
+            
+            // if (err) {
+            //     return res.status(500).send('Database error');
+            // }
+            // const toLoad = rows.map(row => ({csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
+            // res.render('upddelasset.njk', {title: "Update/Delete Assets", toLoad});
+        })
+    } else {
+        db.all('SELECT * FROM assets', (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            }
+            const toParse = rows.map(row => ({assetId: row.asset_id, csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
+            res.render('upddelasset.njk', {title: "Update/Delete Assets", toParse});
+        })
+    }  
 })
 
 //Update/Delete assets type form
@@ -302,4 +322,32 @@ app.post('/newlocation', (req, res) => {
             res.status(200).json({body: "Data inserted successfully into the asset locations' table."});
         }
     });
+})
+
+//------------------------------------------------------------------------------
+//Update/detele area
+
+//Update/delte assets
+app.post('/upddelasset', (req, res) => {
+    const asset = req.body.asset;
+    db.all('SELECT * FROM assets WHERE cs_asset_id = ?', [asset], (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+            // res.status(400).json({body: "Error inserting data into the employees' table."});
+        } else {
+            const toLoad = rows.map(row => ({csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
+            // toLoad.forEach((e) =>{
+            //     console.log(e)
+            // })
+            // console.log(toLoad[0].csId);
+            res.status(200).json({body: toLoad[0]});
+        }
+        
+        // if (err) {
+        //     return res.status(500).send('Database error');
+        // }
+        // const toLoad = rows.map(row => ({csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
+        // res.render('upddelasset.njk', {title: "Update/Delete Assets", toLoad});
+    })
+    
 })

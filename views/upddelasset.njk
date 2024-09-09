@@ -8,9 +8,10 @@
         <form class="row g-3">
             <div class="col-md-4">
                 <label for="inputSearchAsset" class="form-label">Select Asset</label>
-                <select class="form-select">
-                    <option>Text1</option>
-                    <option>Text2</option>
+                <select class="form-select" id="selectAsset">
+                    <option value="chs071">CSH071</option>
+                    <option value="csh098">CSH098</option>
+                    <option value="csh003">CSH003</option>
                 </select>
             </div>
             <hr>
@@ -30,7 +31,7 @@
             </div> #}
             <div class="col-md-4">
                 <label for="inputAssetType" class="form-label">Asset Type</label>
-                <select class="form-select">
+                <select class="form-select" id="selectAssetType">
                     <option>Option1</option>
                     <option>Option2</option>
                 </select>
@@ -80,4 +81,6 @@
             </table>
         </div> #}
     </div>
+
+    <script src="/javascripts/upddelasset.js"></script>
 {% endblock %}
