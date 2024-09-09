@@ -11,10 +11,10 @@ let db = new sqlite3.Database("control.sqlite", (err) => {
 //Tables creation area
 
 //Clients table
-db.run('CREATE TABLE IF NOT EXISTS clients (client_id INTEGER PRIMARY KEY AUTOINCREMENT, client_name TEXT NOT NULL, email TEXT, phone TEXT NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, state TEXT, postcode TEXT NOT NULL)');
+db.run('CREATE TABLE IF NOT EXISTS clients (client_id INTEGER PRIMARY KEY AUTOINCREMENT, client_name TEXT NOT NULL UNIQUE, email TEXT, phone TEXT NOT NULL, address TEXT NOT NULL, city TEXT NOT NULL, state TEXT, postcode TEXT NOT NULL)');
 
 //Assets table
-db.run('CREATE TABLE IF NOT EXISTS assets (asset_id INTEGER PRIMARY KEY AUTOINCREMENT, cs_asset_id TEXT NOT NULL, asset_name TEXT NOT NULL, asset_type TEXT NOT NULL, description TEXT, FOREIGN KEY (asset_type) REFERENCES assets_types(asset_type_id))');
+db.run('CREATE TABLE IF NOT EXISTS assets (asset_id INTEGER PRIMARY KEY AUTOINCREMENT, cs_asset_id TEXT NOT NULL UNIQUE, asset_name TEXT NOT NULL, asset_type TEXT NOT NULL, description TEXT, FOREIGN KEY (asset_type) REFERENCES assets_types(asset_type_id))');
 
 //Assets type table
 db.run('CREATE TABLE IF NOT EXISTS assets_types (asset_type_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_type TEXT NOT NULL, description TEXT NOT NULL)');
@@ -57,5 +57,8 @@ db.run('CREATE TABLE IF NOT EXISTS jobs (job_id INTEGER PRIMARY KEY AUTOINCREMEN
 
 //Allocations table
 db.run('CREATE TABLE IF NOT EXISTS allocations (allocation_id INTEGER PRIMARY KEY AUTOINCREMENT, job_id INTEGER, asset_id INTEGER, function_id INTEGER, leave_yard_time TEXT NOT NULL, start_time_site TEXT NOT NULL, finish_time_site TEXT NOT NULL, back_yard_time TEXT NOT NULL, details TEXT, inducted INTEGER NOT NULL, FOREIGN KEY (function_id) REFERENCES functions(function_id), FOREIGN KEY (asset_id) REFERENCES assets(asset_id), FOREIGN KEY (job_id) REFERENCES jobs(job_id))');
+
+//Asset location table
+db.run('CREATE TABLE IF NOT EXISTS asset_location (asset_location_id INTEGER PRIMARY KEY AUTOINCREMENT, cs_asset_id TEXT NOT NULL, client TEXT NOT NULL, start_date TEXT NOT NULL, end_date TEXT NOT NULL, description TEXT NOT NULL, FOREIGN KEY (cs_asset_id) REFERENCES assets(cs_asset_id), FOREIGN KEY (client) REFERENCES clients(client_name))');
 
 module.exports = db;

@@ -259,9 +259,41 @@ app.post('/newsupervisor', (req, res) => {
 
     db.run('INSERT INTO supervisors (first_name, last_name, email, phone) VALUES (?, ?, ?, ?)', [fname, lname, email, phone], (err) => {
         if (err) {
-            res.status(400).json({body: "Error inserting data into the employees' table."});
+            res.status(400).json({body: "Error inserting data into the supervisors' table."});
         } else {
-            res.status(200).json({body: "Data inserted successfully into the employees' table."});
+            res.status(200).json({body: "Data inserted successfully into the supervisors' table."});
+        }
+    });
+})
+
+//Qualifications registration area
+app.post('/newqualification', (req, res) => {
+    const qualification = req.body.qualification;
+    const qualificationCode = req.body.qualificationCode;
+    const description = req.body.description;
+
+    db.run('INSERT INTO qualifications (qualification, qualification_code, description) VALUES (?, ?, ?)', [qualification, qualificationCode, description], (err) => {
+        if (err) {
+            res.status(400).json({body: "Error inserting data into the qualifications' table."});
+        } else {
+            res.status(200).json({body: "Data inserted successfully into the qualifications' table."});
+        }
+    });
+})
+
+//Asset location registration area
+app.post('/newlocation', (req, res) => {
+    const csId = req.body.csId;
+    const client = req.body.client;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+    const description = req.body.description;
+
+    db.run('INSERT INTO asset_location (cs_asset_id, client, start_date, end_date, description) VALUES (?, ?, ?, ?, ?)', [csId, client, startDate, endDate, description], (err) => {
+        if (err) {
+            res.status(400).json({body: "Error inserting data into the asset locations' table."});
+        } else {
+            res.status(200).json({body: "Data inserted successfully into the asset locations' table."});
         }
     });
 })

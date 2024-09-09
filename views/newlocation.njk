@@ -8,14 +8,14 @@
         <form class="row g-3">
             <div class="col-md-3">
                 <label for="inputCSAssetId" class="form-label">CS Asset ID</label>
-                <select class="form-select">
+                <select class="form-select" id="selectCSAssetId">
                     <option>CSH ???</option>
                     <option>Option 2</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="inputClientId" class="form-label">Client</label>
-                <select class="form-select">
+                <select class="form-select" id="selectClient">
                     <option>Client ???</option>
                     <option>Option 2</option>
                 </select>
@@ -29,13 +29,15 @@
                 <input type="date" class="form-control" id="inputEndDate">
             </div>
             <div class="mb-3">
-                <label for="assetDescription" class="form-label">Description</label>
-                <textarea class="form-control" id="assetDescription" rows="3"></textarea>
+                <label for="locationDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="locationDescription" rows="3"></textarea>
             </div>
             <div class="col-12" style="text-align: right;">
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Register</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-new-location-btn">Register</button>
             </div>
         </form>
     </div>
+    
+    <script src="/javascripts/newlocation.js"></script>
 {% endblock %}
