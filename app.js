@@ -32,7 +32,7 @@ app.use(session({
 }))
 
 //Checking tables data
-db.all('SELECT * FROM employees', (err, rows) => {
+db.all('SELECT * FROM assets', (err, rows) => {
     if (err) {
         throw err;
     }
@@ -180,11 +180,25 @@ app.post('/newemployee', (req, res) => {
 
     db.run('INSERT INTO employees (first_name, last_name, address, suburb, postcode, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?)', [fname, lname, email, phone, address, suburb, postcode], (err) => {
         if (err) {
-            console.error(err.message);
-            res.status(500).send("Error inserting data in employees' table.");
+            res.status(400).json({body: "Error inserting data in assets' table."});
         } else {
-            res.status(200);
-            console.log("Data inserted succssfully in employees' table.");
+            res.status(200).json({body: "Data inserted succssfully in assets' table."});
+        }
+    });
+})
+
+//Employees registration area
+app.post('/newasset', (req, res) => {
+    const craneServicesId = req.body.craneServicesId;
+    const assetName = req.body.assetName;
+    const assetType = req.body.assetType;
+    const description = req.body.description;
+
+    db.run('INSERT INTO assets (cs_asset_id, asset_name, asset_type, description) VALUES (?, ?, ?, ?)', [craneServicesId, assetName, assetType, description], (err) => {
+        if (err) {
+            res.status(400).json({body: "Error inserting data in assets' table."});
+        } else {
+            res.status(200).json({body: "Data inserted succssfully in assets' table."});
         }
     });
 })

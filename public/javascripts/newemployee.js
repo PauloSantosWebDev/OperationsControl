@@ -23,10 +23,17 @@ async function insertEmployees () {
 
     try {
         const response = await fetch("/newemployee", options);
-        const result = await response.json();
-        return result.body;
+        if (response.ok) {
+            const result = await response.json();
+            alert (`Success: ${result.body}`);
+            location.reload();
+        } else {
+            const errorResult = await response.json();
+            alert(`Error: ${errorResult.body}`);
+        }
     } catch (error) {
         console.error("Error: ", error);
+        alert('There was an error fetching the data.');
     }
 }
 

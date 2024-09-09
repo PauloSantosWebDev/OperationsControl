@@ -22,9 +22,9 @@
             </div> #}
             <div class="col-md-4">
                 <label for="inputAssetType" class="form-label">Asset Type</label>
-                <select class="form-select">
-                    <option>Text1</option>
-                    <option>Text2</option>
+                <select class="form-select" id="selectAssetType">
+                    <option value="Option1">Option1</option>
+                    <option value="Option2">Option2</option>
                 </select>
             </div>
             <div class="mb-3">
@@ -33,8 +33,10 @@
             </div>
             <div class="col-12" style="text-align: right;">
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Register</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-new-asset-btn">Register</button>
             </div>
         </form>
     </div>
+
+    <script src="/javascripts/newasset.js"></script>
 {% endblock %}
