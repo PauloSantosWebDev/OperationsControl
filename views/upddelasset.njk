@@ -9,9 +9,9 @@
             <div class="col-md-4">
                 <label for="inputSearchAsset" class="form-label">Select Asset</label>
                 <select class="form-select" id="selectAsset">
-                    <option value="chs071">CSH071</option>
-                    <option value="csh098">CSH098</option>
-                    <option value="csh003">CSH003</option>
+                    {% for a in toParse %}
+                        <option value="{{a.csId}}">{{a.csId}}<option>
+                    {% endfor %}
                 </select>
             </div>
             <hr>
@@ -32,8 +32,9 @@
             <div class="col-md-4">
                 <label for="inputAssetType" class="form-label">Asset Type</label>
                 <select class="form-select" id="selectAssetType">
-                    <option>Option1</option>
-                    <option>Option2</option>
+                    {% for i in assetType %}
+                        <option value="{{i.assetType}}">{{i.assetType}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="mb-3">
@@ -41,9 +42,9 @@
                 <textarea class="form-control" id="assetDescription" rows="3"></textarea>
             </div>
             <div class="col-12" style="text-align: right;">
-                <button type="button" class="btn btn-danger me-md-2">Delete</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-delete-record">Delete</button>
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Update</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-update-record">Update</button>
             </div>
         </form>
     </div>
