@@ -10,7 +10,7 @@
                 <label for="inputSearchAsset" class="form-label">Select Asset</label>
                 <select class="form-select" id="selectAsset">
                     {% for a in toParse %}
-                        <option value="{{a.csId}}">{{a.csId}}<option>
+                        <option value="{{a.csId}}">{{a.csId}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -76,11 +76,6 @@
                     </tr>
                 </tbody>
         </table>
-        {# <div id="upddeldata">
-            <table>
-                
-            </table>
-        </div> #}
     </div>
 
     <script src="/javascripts/upddelasset.js"></script>
