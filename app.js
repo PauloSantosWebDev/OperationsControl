@@ -31,16 +31,16 @@ app.use(session({
   cookie: { secure: true }
 }))
 
-//Checking tables data
-// db.all('SELECT * FROM assets', (err, rows) => {
-//     if (err) {
-//         throw err;
-//     }
+// Checking tables data
+db.all('SELECT * FROM employees', (err, rows) => {
+    if (err) {
+        throw err;
+    }
 
-//     rows.forEach(row => {
-//         console.log(row);
-//     })
-// })
+    rows.forEach(row => {
+        console.log(row);
+    })
+})
 
 
 //-----------------------------------------------------------------------
@@ -141,7 +141,13 @@ app.get('/upddelclient', (req, res) => {
 
 //Update/Delete employee form
 app.get('/upddelemployee', (req, res) => {
-    res.render('upddelemployee.njk', {title: "Update/Delete Employee"})
+    db.all('SELECT * FROM employees', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({employeeId: row.employee_id, firstName: row.first_name, lastName: row.last_name, address: row.address, suburb: row.suburb, postcode: row.postcode, phone: row.phone, email: row.email}))
+        res.render('upddelemployee.njk', {title: "Update/Delete Employee", toParse});
+    })
 })
 
 //Update/Delete function form
@@ -418,13 +424,13 @@ app.post('/upddelclient', (req, res) => {
     const executionPath = req.body.executionPath;
 
     if (executionPath === "update") {
-        const clientName = result.body.clientName;
-        const email = result.body.email;
-        const phone = result.body.phone;
-        const address = result.body.address;
-        const city = result.body.city;
-        const state = result.body.state;
-        const postcode = result.body.postcode;
+        const clientName = req.body.clientName;
+        const email = req.body.email;
+        const phone = req.body.phone;
+        const address = req.body.address;
+        const city = req.body.city;
+        const state = req.body.state;
+        const postcode = req.body.postcode;
 
         db.all('UPDATE clients SET client_name = ?, email = ?, phone = ?, address = ?, city = ?, state = ?, postcode = ? WHERE client_name = ?', [clientName, email, phone, address, city, state, postcode, selectClient], (err) => {
             if (err) {

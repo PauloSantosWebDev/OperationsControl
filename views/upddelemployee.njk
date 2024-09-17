@@ -9,8 +9,9 @@
             <div class="col-md-4">
                 <label for="inputSearchAsset" class="form-label">Select Asset</label>
                 <select class="form-select">
-                    <option>Text1</option>
-                    <option>Text2</option>
+                    {% for opt in toParse%}
+                        <option value="{{opt.firstName + opt.lastName}}">{{opt.firstName + ' ' + opt.lastName}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <hr>
@@ -52,5 +53,39 @@
     <hr>
     <div class="container mt-5">
         <h1>Area to show the data</h1>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" valign="middle" style="text-align: center;">Number</th>
+                    <th scope="col" valign="middle" style="text-align: center;">First Name</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Last Name</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Email</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Phone</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Address</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Suburb</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Postcode</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in toParse %}
+                    <tr>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.employeeId}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.firstName}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.lastName}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.email}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.phone}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.address}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.suburb}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.postcode}}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    
+                </tr>
+            </tbody>
+        </table>
     </div>
+    
+    <script src="/javascripts/upddelemployee.js"></script>
+
 {% endblock %}
