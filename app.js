@@ -119,6 +119,7 @@ app.get('/upddelasset', (req, res) => {
 
 //Update/Delete assets type form
 app.get('/upddelassettype', (req, res) => {
+    
     res.render('upddelassettype.njk', {title: "Update/Delete Assets type"})
 })
 
