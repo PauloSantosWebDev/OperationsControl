@@ -119,8 +119,13 @@ app.get('/upddelasset', (req, res) => {
 
 //Update/Delete assets type form
 app.get('/upddelassettype', (req, res) => {
-    
-    res.render('upddelassettype.njk', {title: "Update/Delete Assets type"})
+    db.all('SELECT * FROM assets_types', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({assetTypeId: row.asset_type_id, assetType: row.asset_type, description: row.description}));
+        res.render('upddelassettype.njk', {title: "Update/Delete Assets type", toParse});
+    })
 })
 
 //Update/Delete client form
@@ -314,7 +319,7 @@ app.post('/newlocation', (req, res) => {
 //------------------------------------------------------------------------------
 //Update/detele area
 
-//Update/delte assets
+//Update/delete assets
 app.post('/upddelasset', (req, res) => {
     const asset = req.body.asset;
     const executionPath = req.body.executionPath;
@@ -331,7 +336,11 @@ app.post('/upddelasset', (req, res) => {
             } else {
                 const target = rows[0].asset_id;
                 db.all('UPDATE assets SET cs_asset_id = ?, asset_name = ?, asset_type = ?, description = ? WHERE asset_id = ?', [csId, assetName, assetType, description, target], (err, rows) => {
-                    res.status(200).json({body: "Successfully updated"});
+                    if (err) {
+                        return res.status(500).send('Database error');
+                    }else {
+                        res.status(200).json({body: "Successfully updated"});
+                    }
                 })
             }
         })
@@ -368,4 +377,40 @@ app.post('/upddelasset', (req, res) => {
     //     }
     // })
     
+})
+
+//Update/delte asset types
+app.post('/upddelassettype', (req, res) => {
+    const selectAssetType = req.body.selectAssetType;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const assetType = req.body.assetType;
+        const description = req.body.description;
+
+        db.all('UPDATE assets_types SET asset_type = ?, description = ? WHERE asset_type = ?', [assetType, description, selectAssetType], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM assets_types WHERE asset_type = ?', [selectAssetType], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT * FROM assets_types WHERE asset_type = ?', [selectAssetType], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({assetType: row.asset_type, description: row.description}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }  
 })

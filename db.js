@@ -17,7 +17,7 @@ db.run('CREATE TABLE IF NOT EXISTS clients (client_id INTEGER PRIMARY KEY AUTOIN
 db.run('CREATE TABLE IF NOT EXISTS assets (asset_id INTEGER PRIMARY KEY AUTOINCREMENT, cs_asset_id TEXT NOT NULL UNIQUE, asset_name TEXT NOT NULL, asset_type TEXT NOT NULL, description TEXT, FOREIGN KEY (asset_type) REFERENCES assets_types(asset_type_id))');
 
 //Assets type table
-db.run('CREATE TABLE IF NOT EXISTS assets_types (asset_type_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_type TEXT NOT NULL, description TEXT NOT NULL)');
+db.run('CREATE TABLE IF NOT EXISTS assets_types (asset_type_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_type TEXT NOT NULL UNIQUE, description TEXT NOT NULL)');
 
 //Asset not available table
 db.run('CREATE TABLE IF NOT EXISTS asset_not_available (asset_not_available_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_id INTEGER NOT NULL, start_date TEXT NOT NULL, end_date TEXT NOT NULL, description TEXT, FOREIGN KEY (asset_id) REFERENCES assets(asset_id))');
