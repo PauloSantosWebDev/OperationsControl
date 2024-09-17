@@ -130,7 +130,13 @@ app.get('/upddelassettype', (req, res) => {
 
 //Update/Delete client form
 app.get('/upddelclient', (req, res) => {
-    res.render('upddelclient.njk', {title: "Update/Delete Client"})
+    db.all('SELECT * FROM clients', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({clientId: row.client_id, clientName: row.client_name, email: row.email, phone: row.email, address: row.address, city: row.city, state: row.state, postcode: row.postcode}));
+        res.render('upddelclient.njk', {title: "Update/Delete Client", toParse});
+    })
 })
 
 //Update/Delete employee form
@@ -367,19 +373,10 @@ app.post('/upddelasset', (req, res) => {
                 res.status(200).json({body: toLoad[0]});
             }
         })
-    }
-    // db.all('SELECT * FROM assets WHERE cs_asset_id = ?', [asset], (err, rows) => {
-    //     if (err) {
-    //         return res.status(500).send('Database error');
-    //     } else {
-    //         const toLoad = rows.map(row => ({csId: row.cs_asset_id, assetName: row.asset_name, assetType: row.asset_type, description: row.description}));
-    //         res.status(200).json({body: toLoad[0]});
-    //     }
-    // })
-    
+    }    
 })
 
-//Update/delte asset types
+//Update/delete asset types
 app.post('/upddelassettype', (req, res) => {
     const selectAssetType = req.body.selectAssetType;
     const executionPath = req.body.executionPath;
@@ -388,7 +385,7 @@ app.post('/upddelassettype', (req, res) => {
         const assetType = req.body.assetType;
         const description = req.body.description;
 
-        db.all('UPDATE assets_types SET asset_type = ?, description = ? WHERE asset_type = ?', [assetType, description, selectAssetType], (err, rows) => {
+        db.all('UPDATE assets_types SET asset_type = ?, description = ? WHERE asset_type = ?', [assetType, description, selectAssetType], (err) => {
             if (err) {
                 return res.status(500).send('Database error');
             } else {
@@ -396,7 +393,7 @@ app.post('/upddelassettype', (req, res) => {
             }
         })
     } else if (executionPath === "delete") {
-        db.all('DELETE FROM assets_types WHERE asset_type = ?', [selectAssetType], (err, rows) => {
+        db.all('DELETE FROM assets_types WHERE asset_type = ?', [selectAssetType], (err) => {
             if (err) {
                 return res.status(500).send('Database error');
             } else {
@@ -409,6 +406,47 @@ app.post('/upddelassettype', (req, res) => {
                 return res.status(500).send('Database error');
             } else {
                 const toLoad = rows.map(row => ({assetType: row.asset_type, description: row.description}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }  
+})
+
+//Update/delete clients
+app.post('/upddelclient', (req, res) => {
+    const selectClient = req.body.client;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const clientName = result.body.clientName;
+        const email = result.body.email;
+        const phone = result.body.phone;
+        const address = result.body.address;
+        const city = result.body.city;
+        const state = result.body.state;
+        const postcode = result.body.postcode;
+
+        db.all('UPDATE clients SET client_name = ?, email = ?, phone = ?, address = ?, city = ?, state = ?, postcode = ? WHERE client_name = ?', [clientName, email, phone, address, city, state, postcode, selectClient], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM clients WHERE client_name = ?', [selectClient], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT * FROM clients WHERE client_name = ?', [selectClient], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({clientId: row.client_id, clientName: row.client_name, email: row.email, phone: row.email, address: row.address, city: row.city, state: row.state, postcode: row.postcode}));
                 res.status(200).json({body: toLoad[0]});
             }
         })
