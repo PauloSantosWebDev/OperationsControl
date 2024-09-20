@@ -168,7 +168,13 @@ app.get('/upddelqualification', (req, res) => {
 
 //New supervisor page
 app.get('/upddelsupervisor', (req, res) => {
-    res.render('upddelsupervisor.njk', {title: "Update/delete Supervisor"})
+    db.all('SELECT * FROM supervisors', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({supervisorId: row.supervisor_id, firstName: row.first_name, lastName: row.last_name, email: row.email, phone: row.phone}))
+        res.render('upddelsupervisor.njk', {title: "Update/delete Supervisor", toParse});
+    })
 })
 
 //Update location form
@@ -536,6 +542,44 @@ app.post('/upddelfunction', (req, res) => {
                 return res.status(500).send('Database error');
             } else {
                 const toLoad = rows.map(row => ({function: row.function, description: row.description}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }  
+})
+
+//Update/delete supervisors
+app.post('/upddelsupervisor', (req, res) => {
+    const selectSupervisor = req.body.selectSupervisor;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const firstName = req.body.firstName;
+        const lastName = req.body.lastName;
+        const email = req.body.email;
+        const phone = req.body.phone;
+
+        db.all('UPDATE supervisors SET first_name = ?, last_name = ?, email = ?, phone = ? WHERE CONCAT(first_name, last_name) = ?', [firstName, lastName, email, phone, selectSupervisor], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM supervisors WHERE CONCAT(first_name, last_name) = ?', [selectSupervisor], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT * FROM supervisors WHERE CONCAT(first_name, last_name) = ?', [selectSupervisor], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({firstName: row.first_name, lastName: row.last_name, email: row.email, phone: row.phone}));
                 res.status(200).json({body: toLoad[0]});
             }
         })

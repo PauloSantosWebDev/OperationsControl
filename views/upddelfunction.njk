@@ -34,25 +34,25 @@
     <div class="container mt-5">
         <h1>Functions Register</h1>
         <table class="table table-hover table-bordered">
-                <thead>
+            <thead>
+                <tr>
+                    <th scope="col" valign="middle" style="text-align: center;">Number</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Function</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in toParse %}
                     <tr>
-                        <th scope="col" valign="middle" style="text-align: center;">Number</th>
-                        <th scope="col" valign="middle" style="text-align: center;">Function</th>
-                        <th scope="col" valign="middle" style="text-align: center;">Description</th>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.functionId}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.function}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.description}}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for t in toParse %}
-                        <tr>
-                            <td scope="col" valign="middle" style="text-align: center;">{{t.functionId}}</td>
-                            <td scope="col" valign="middle" style="text-align: center;">{{t.function}}</td>
-                            <td scope="col" valign="middle" style="text-align: center;">{{t.description}}</td>
-                        </tr>
-                    {% endfor %}
-                    <tr>
-                        
-                    </tr>
-                </tbody>
+                {% endfor %}
+                <tr>
+                    
+                </tr>
+            </tbody>
         </table>
     </div>
 
@@ -92,5 +92,5 @@
         </div>
     </div>
 
-    <script src="/javascripts/upddelfunction.js"></script>
+    <script src="/javascripts/upddelsupervisor.js"></script>
 {% endblock %}
