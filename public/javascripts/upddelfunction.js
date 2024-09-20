@@ -1,10 +1,7 @@
 let executionPath = "show";
 
-//Event listeners
-
-//Select and show desired data
-document.getElementById('selectEmployee').addEventListener('change', async () => {
-    let employee = document.getElementById('selectEmployee').value;
+async function loadTable () {
+    let selectFunction = document.getElementById('selectFunction').value;
     executionPath = "show";
 
     const options = {
@@ -12,20 +9,15 @@ document.getElementById('selectEmployee').addEventListener('change', async () =>
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({employee, executionPath})
+        body: JSON.stringify({selectFunction, executionPath})
     };
 
     try {
-        const response = await fetch('/upddelemployee', options);
+        const response = await fetch('/upddelfunction', options);
         if (response.ok) {
             const result = await response.json();
-            document.getElementById('inputEmployeeFirstName').value = result.body.firstName;
-            document.getElementById('inputEmployeeLastName').value = result.body.lastName;
-            document.getElementById('inputEmployeeEmail').value = result.body.email;
-            document.getElementById('inputEmployeePhone').value = result.body.phone;
-            document.getElementById('inputAddress').value = result.body.address;
-            document.getElementById('inputSuburb').value = result.body.suburb;
-            document.getElementById('inputPostcode').value = result.body.postcode;
+            document.getElementById('inputFunction').value = result.body.function;
+            document.getElementById('functionDescription').value = result.body.description;
         } else {
             const errorResult = await response.json();
             alert(`Error: ${errorResult.body}`);
@@ -35,11 +27,18 @@ document.getElementById('selectEmployee').addEventListener('change', async () =>
         console.error("Error: ", error);
         alert('There was an error fetching the data.');
     }
+}
+
+//Event listeners
+
+//Select and show desired data
+document.getElementById('selectFunction').addEventListener('change', () => {
+    loadTable();
 })
 
 //Delete record
 document.getElementById('js-delete-record').addEventListener('click', async () => {
-    let employee = document.getElementById('selectEmployee').value;
+    let selectFunction = document.getElementById('selectFunction').value;
     let executionPath = "delete";
 
     const options = {
@@ -47,11 +46,11 @@ document.getElementById('js-delete-record').addEventListener('click', async () =
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({employee, executionPath})
+        body: JSON.stringify({selectFunction, executionPath})
     };
 
     try {
-        const response = await fetch('/upddelemployee', options);
+        const response = await fetch('/upddelfunction', options);
         if (response.ok) {
             const result = await response.json();
             alert(result.body);
@@ -69,18 +68,12 @@ document.getElementById('js-delete-record').addEventListener('click', async () =
 
 //Update record
 document.getElementById('js-update-record').addEventListener('click', async () => {
-    let employee = document.getElementById('selectEmployee').value;
+    let selectFunction = document.getElementById('selectFunction').value;
     let executionPath = "update";
+    let functionDetail = document.getElementById('inputFunction').value;
+    let description = document.getElementById('functionDescription').value;
 
-    const firstName = document.getElementById('inputEmployeeFirstName').value;
-    const lastName = document.getElementById('inputEmployeeLastName').value;
-    const email = document.getElementById('inputEmployeeEmail').value;
-    const phone = document.getElementById('inputEmployeePhone').value;
-    const address = document.getElementById('inputAddress').value;
-    const suburb = document.getElementById('inputSuburb').value;
-    const postcode = document.getElementById('inputPostcode').value;
-
-    if(!firstName || !lastName || !email || !phone || !address || !suburb || !postcode) {
+    if(!functionDetail || !description) {
         alert("FAILED! All fields required!");
         return
     }
@@ -90,11 +83,11 @@ document.getElementById('js-update-record').addEventListener('click', async () =
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({firstName, lastName, email, phone, address, suburb, postcode, employee, executionPath})
+        body: JSON.stringify({selectFunction, executionPath, functionDetail, description})
     };
 
     try {
-        const response = await fetch('/upddelemployee', options);
+        const response = await fetch('/upddelfunction', options);
         if (response.ok) {
             const result = await response.json();
             alert(result.body);

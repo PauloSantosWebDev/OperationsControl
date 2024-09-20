@@ -32,15 +32,15 @@ app.use(session({
 }))
 
 // Checking tables data
-db.all('SELECT * FROM employees', (err, rows) => {
-    if (err) {
-        throw err;
-    }
+// db.all('DROP TABLE employees', (err, rows) => {
+//     if (err) {
+//         throw err;
+//     }
 
-    rows.forEach(row => {
-        console.log(row);
-    })
-})
+//     rows.forEach(row => {
+//         console.log(row);
+//     })
+// })
 
 
 //-----------------------------------------------------------------------
@@ -152,7 +152,13 @@ app.get('/upddelemployee', (req, res) => {
 
 //Update/Delete function form
 app.get('/upddelfunction', (req, res) => {
-    res.render('upddelfunction.njk', {title: "Update/Delete Function"})
+    db.all('SELECT * FROM functions', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({functionId: row.function_id, function: row.function, description: row.description}))
+        res.render('upddelfunction.njk', {title: "Update/Delete Function", toParse});
+    })
 })
 
 //Update/Delete qualification form
@@ -208,7 +214,7 @@ app.post('/newemployee', (req, res) => {
     const suburb = req.body.suburb;
     const postcode = req.body.postcode;
 
-    db.run('INSERT INTO employees (first_name, last_name, address, suburb, postcode, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?)', [fname, lname, email, phone, address, suburb, postcode], (err) => {
+    db.run('INSERT INTO employees (first_name, last_name, address, suburb, postcode, phone, email) VALUES (?, ?, ?, ?, ?, ?, ?)', [fname, lname, address, suburb, postcode, phone, email], (err) => {
         if (err) {
             res.status(400).json({body: "Error inserting data into the employees' table."});
         } else {
@@ -452,7 +458,84 @@ app.post('/upddelclient', (req, res) => {
             if (err) {
                 return res.status(500).send('Database error');
             } else {
-                const toLoad = rows.map(row => ({clientId: row.client_id, clientName: row.client_name, email: row.email, phone: row.email, address: row.address, city: row.city, state: row.state, postcode: row.postcode}));
+                const toLoad = rows.map(row => ({clientId: row.client_id, clientName: row.client_name, email: row.email, phone: row.phone, address: row.address, city: row.city, state: row.state, postcode: row.postcode}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }  
+})
+
+//Update/delete employee
+app.post('/upddelemployee', (req, res) => {
+    const selectEmployee = req.body.employee;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const firstName = req.body.firstName;
+        const lastName = req.body.lastName;
+        const email = req.body.email;
+        const phone = req.body.phone;
+        const address = req.body.address;
+        const suburb = req.body.suburb;
+        const postcode = req.body.postcode;
+
+        db.all('UPDATE employees SET first_name = ?, last_name = ?, address = ?, suburb = ?, postcode = ?, phone = ?, email = ? WHERE CONCAT(first_name, last_name) = ?', [firstName, lastName, address, suburb, postcode, phone, email, selectEmployee], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM employees WHERE CONCAT(first_name, last_name) = ?', [selectEmployee], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT *, CONCAT(first_name, last_name) as full_name FROM employees WHERE full_name = ?', [selectEmployee], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({firstName: row.first_name, lastName: row.last_name, email: row.email, phone: row.phone, address: row.address, suburb: row.suburb, postcode: row.postcode}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }  
+})
+
+//Update/delete functions
+app.post('/upddelfunction', (req, res) => {
+    const selectFunction = req.body.selectFunction;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const functionDetail = req.body.functionDetail;
+        const description = req.body.description;
+
+        db.all('UPDATE functions SET function = ?, description = ? WHERE function = ?', [functionDetail, description, selectFunction], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM functions WHERE function = ?', [selectFunction], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT * FROM functions WHERE function = ?', [selectFunction], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({function: row.function, description: row.description}));
                 res.status(200).json({body: toLoad[0]});
             }
         })
