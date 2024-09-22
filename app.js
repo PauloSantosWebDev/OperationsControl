@@ -202,7 +202,10 @@ app.get('/updatelocation', (req, res) => {
             return res.status(500).send('Database error');
         }
         const toParse = rows.map(row => ({assetLocationId: row.asset_location_id, csAssetId: row.cs_asset_id, client: row.client, startDate: row.start_date, endDate: row.end_date, description: row.description}));
-        db.all('SELECT * FROM assets', (err, rows) => {
+        let csAssetIds = []
+        toParse.forEach(e => csAssetIds.push(e.csAssetId));
+        const placeholders = csAssetIds.map(() => '?').join(',');
+        db.all(`SELECT cs_asset_id, asset_name FROM assets WHERE cs_asset_id IN (${placeholders})`, csAssetIds, (err, rows) => {
             if (err) {
                 return res.status(500).send('Database error');
             }
@@ -622,7 +625,7 @@ app.post('/upddelsupervisor', (req, res) => {
     }  
 })
 
-//Update/delete supervisors
+//Update/delete qualification
 app.post('/upddelqualification', (req, res) => {
     const selectQualification = req.body.selectQualification;
     const executionPath = req.body.executionPath;
@@ -653,6 +656,44 @@ app.post('/upddelqualification', (req, res) => {
                 return res.status(500).send('Database error');
             } else {
                 const toLoad = rows.map(row => ({qualification: row.qualification, qualificationCode: row.qualification_code, description: row.description}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }  
+})
+
+//Update/delete location
+app.post('/updatelocation', (req, res) => {
+    const selectAsset = req.body.asset;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const client = req.body.client;
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const description = req.body.description;
+
+        db.all('UPDATE asset_location SET client = ?, start_date = ?, end_date = ?, description = ? WHERE cs_asset_id = ?', [client, startDate, endDate, description, selectAsset], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM asset_location WHERE cs_asset_id = ?', [selectAsset], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT * FROM asset_location WHERE cs_asset_id = ?', [selectAsset], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({client: row.client, startDate: row.start_date, endDate: row.end_date, description: row.description}));
                 res.status(200).json({body: toLoad[0]});
             }
         })

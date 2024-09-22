@@ -13,12 +13,17 @@ async function loadTable () {
     };
 
     try {
-        const response = await fetch('/upddelasset', options);
+        const response = await fetch('/updatelocation', options);
         if (response.ok) {
             const result = await response.json();
-            document.getElementById('inputCSAssetId').value = result.body.csId;
-            document.getElementById('inputAssetName').value = result.body.assetName;
-            document.getElementById('selectAssetType').value = result.body.assetType;
+            document.getElementById('selectClient').value = result.body.client;
+            if (result.body.startDate.split('-')[2].length === 4) {
+                document.getElementById('inputStartDate').value = result.body.startDate.split('-').reverse().join('-');
+                document.getElementById('inputEndDate').value = result.body.endDate.split('-').reverse().join('-');
+            } else {
+                document.getElementById('inputStartDate').value = result.body.startDate;
+                document.getElementById('inputEndDate').value = result.body.endDate;
+            }
             document.getElementById('assetDescription').value = result.body.description;
         } else {
             const errorResult = await response.json();
@@ -52,7 +57,7 @@ document.getElementById('js-delete-record').addEventListener('click', async () =
     };
 
     try {
-        const response = await fetch('/upddelasset', options);
+        const response = await fetch('/updatelocation', options);
         if (response.ok) {
             const result = await response.json();
             alert(result.body);
@@ -72,12 +77,12 @@ document.getElementById('js-delete-record').addEventListener('click', async () =
 document.getElementById('js-update-record').addEventListener('click', async () => {
     let asset = document.getElementById('selectAsset').value;
     let executionPath = "update";
-    let csId = document.getElementById('inputCSAssetId').value;
-    let assetName = document.getElementById('inputAssetName').value;
-    let assetType = document.getElementById('selectAssetType').value;
+    let client = document.getElementById('selectClient').value;
+    let startDate = document.getElementById('inputStartDate').value;
+    let endDate = document.getElementById('inputEndDate').value;
     let description = document.getElementById('assetDescription').value;
-
-    if(!csId || !assetName || !assetType || !description) {
+    
+    if(!client || !startDate || !endDate || !description) {
         alert("FAILED! All fields required!");
         return
     }
@@ -87,11 +92,11 @@ document.getElementById('js-update-record').addEventListener('click', async () =
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({asset, executionPath, csId, assetName, assetType, description})
+        body: JSON.stringify({asset, executionPath, client, startDate, endDate, description})
     };
 
     try {
-        const response = await fetch('/upddelasset', options);
+        const response = await fetch('/updatelocation', options);
         if (response.ok) {
             const result = await response.json();
             alert(result.body);
