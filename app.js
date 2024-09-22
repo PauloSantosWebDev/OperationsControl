@@ -67,7 +67,13 @@ app.get('/newclient', (req, res) => {
 
 //New assets page
 app.get('/newasset', (req, res) => {
-    res.render('newasset.njk', {title: 'Asset Type'})
+    db.all('SELECT asset_type FROM assets_types', (err, rows) => {
+        if (err) {
+            res.status(500).send('Database error.')
+        }
+        const toParse = rows.map(row => ({assetType: row.asset_type}));
+        res.render('newasset.njk', {title: 'Asset Type', toParse})
+    })
 })
 
 //New asset type page

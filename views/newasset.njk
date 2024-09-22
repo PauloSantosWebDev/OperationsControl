@@ -23,8 +23,9 @@
             <div class="col-md-4">
                 <label for="inputAssetType" class="form-label">Asset Type</label>
                 <select class="form-select" id="selectAssetType">
-                    <option value="Option1">Option1</option>
-                    <option value="Option2">Option2</option>
+                    {% for opt in toParse %}
+                        <option value="{{opt.assetType}}">{{opt.assetType}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="mb-3">
