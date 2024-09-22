@@ -163,7 +163,13 @@ app.get('/upddelfunction', (req, res) => {
 
 //Update/Delete qualification form
 app.get('/upddelqualification', (req, res) => {
-    res.render('upddelqualification.njk', {title: "Update/Delete Qualification"})
+    db.all('SELECT * FROM qualifications', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({qualificationId: row.qualification_id, qualification: row.qualification, qualificationCode: row.qualification_code, description: row.description}))
+        res.render('upddelqualification.njk', {title: "Update/Delete Qualification", toParse});
+    })
 })
 
 //New supervisor page
@@ -580,6 +586,43 @@ app.post('/upddelsupervisor', (req, res) => {
                 return res.status(500).send('Database error');
             } else {
                 const toLoad = rows.map(row => ({firstName: row.first_name, lastName: row.last_name, email: row.email, phone: row.phone}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }  
+})
+
+//Update/delete supervisors
+app.post('/upddelqualification', (req, res) => {
+    const selectQualification = req.body.selectQualification;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const qualification = req.body.qualification;
+        const qualificationCode = req.body.qualificationCode;
+        const description = req.body.description;
+
+        db.all('UPDATE qualifications SET qualification = ?, qualification_code = ?, description = ? WHERE qualification = ?', [qualification, qualificationCode, description, selectQualification], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM qualifications WHERE qualification = ?', [selectQualification], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT * FROM qualifications WHERE qualification = ?', [selectQualification], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({qualification: row.qualification, qualificationCode: row.qualification_code, description: row.description}));
                 res.status(200).json({body: toLoad[0]});
             }
         })
