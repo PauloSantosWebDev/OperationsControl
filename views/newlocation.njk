@@ -9,15 +9,17 @@
             <div class="col-md-3">
                 <label for="inputCSAssetId" class="form-label">CS Asset ID</label>
                 <select class="form-select" id="selectCSAssetId">
-                    <option>CSH ???</option>
-                    <option>Option 2</option>
+                    {% for opt in toParse %}
+                        <option value="{{opt.csId}}">{{opt.csId + ' - ' + opt.asset}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="inputClientId" class="form-label">Client</label>
                 <select class="form-select" id="selectClient">
-                    <option>Client ???</option>
-                    <option>Option 2</option>
+                    {% for opt2 in toParse2 %}
+                        <option value="{{opt2.client}}">{{opt2.client}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">

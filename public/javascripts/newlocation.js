@@ -2,9 +2,17 @@
 async function insertLocation () {
     const csId = document.getElementById('selectCSAssetId').value;
     const client = document.getElementById('selectClient').value;
-    const startDate = document.getElementById('inputStartDate').value;
-    const endDate = document.getElementById('inputEndDate').value;
+    let startDate = document.getElementById('inputStartDate').value;
+    let endDate = document.getElementById('inputEndDate').value;
     const description = document.getElementById('locationDescription').value;
+
+    //I need to invert the date format to show dd/mm/yyyy instead of yyyy/mm/dd
+    if (startDate.split('-')[0].length === 4) { //if is needed because some computer have dd/mm/yyyy as defaul and then all the inversion is unnecessary
+        const invertedStartDate = startDate.split('-').reverse().join('-');
+        const invertedEndDate = endDate.split('-').reverse().join('-');
+        startDate = invertedStartDate;
+        endDate = invertedEndDate;
+    }
 
     if(!csId || !client || !startDate || !endDate || !description) {
         alert("All fields required!");

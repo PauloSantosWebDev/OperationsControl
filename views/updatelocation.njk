@@ -2,30 +2,33 @@
 
 {% block content %}
     <div class="container mt-5">
-        <h1 style="color: #E63C2B; font-weight: bold;">Update location form</h1>
+        <h1 style="color: #E63C2B; font-weight: bold;">Update/delete location form</h1>
     </div>
     <div class="container mt-5">
         <form class="row g-3">
             <div class="col-md-4">
                 <label for="inputSearchAsset" class="form-label">Select Asset</label>
-                <select class="form-select">
-                    <option>Text1</option>
-                    <option>Text2</option>
+                <select class="form-select" id="selectAsset">
+                    {% for opt in toParse2 %}
+                        <option value="{{opt.asset}}">{{opt.asset}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <hr>
             <div class="col-md-3">
                 <label for="inputCSAssetId" class="form-label">CS Asset ID</label>
-                <select class="form-select">
-                    <option>CSH ???</option>
-                    <option>Option 2</option>
+                <select class="form-select" id="selectCSID">
+                    {% for opt2 in toParse2 %}
+                        <option value="{{opt2.csId}}">{{opt2.csId}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="inputClientId" class="form-label">Client</label>
-                <select class="form-select">
-                    <option>Client ???</option>
-                    <option>Option 2</option>
+                <select class="form-select" id="selectClient">
+                    {% for opt3 in toParse3 %}
+                        <option value="{{opt3.client}}">{{opt3.client}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">
@@ -49,6 +52,35 @@
     </div>
     <hr>
     <div class="container mt-5">
-        <h1>Area to show the data</h1>
+        <h1>Location Register</h1>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" valign="middle" style="text-align: center;">Number</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Crane Services ID</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Client</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Start Date</th>
+                    <th scope="col" valign="middle" style="text-align: center;">End Date</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in toParse %}
+                    <tr>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.assetLocationId}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.csAssetId}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.client}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.startDate}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.endDate}}</td>
+                        <td scope="col" valign="middle" style="text-align: center; word-wrap: break-word; white-space: normal; max-width: 400px;">{{t.description}}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    
+                </tr>
+            </tbody>
+        </table>
     </div>
+
+    {# <script src="/javascript/upddellocation.js"></script> #}
 {% endblock %}

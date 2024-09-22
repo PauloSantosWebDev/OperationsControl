@@ -32,7 +32,7 @@ app.use(session({
 }))
 
 // Checking tables data
-// db.all('DROP TABLE employees', (err, rows) => {
+// db.all('DROP TABLE asset_location', (err, rows) => {
 //     if (err) {
 //         throw err;
 //     }
@@ -92,7 +92,19 @@ app.get('/newqualification', (req, res) => {
 
 //New asset location page
 app.get('/newlocation', (req, res) => {
-    res.render('newlocation.njk', {title: "New Asset Location"})
+    db.all('SELECT cs_asset_id, asset_name FROM assets', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({csId: row.cs_asset_id, asset: row.asset_name}));
+        db.all ('SELECT client_name FROM clients', (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            }
+            const toParse2 = rows.map(row => ({client: row.client_name}));
+            res.render('newlocation.njk', {title: "New Asset Location", toParse, toParse2});
+        })
+    })
 })
 
 //New supervisor page
@@ -134,7 +146,7 @@ app.get('/upddelclient', (req, res) => {
         if (err) {
             return res.status(500).send('Database error');
         }
-        const toParse = rows.map(row => ({clientId: row.client_id, clientName: row.client_name, email: row.email, phone: row.email, address: row.address, city: row.city, state: row.state, postcode: row.postcode}));
+        const toParse = rows.map(row => ({clientId: row.client_id, clientName: row.client_name, email: row.email, phone: row.phone, address: row.address, city: row.city, state: row.state, postcode: row.postcode}));
         res.render('upddelclient.njk', {title: "Update/Delete Client", toParse});
     })
 })
@@ -172,7 +184,7 @@ app.get('/upddelqualification', (req, res) => {
     })
 })
 
-//New supervisor page
+//Update/delete supervisor page
 app.get('/upddelsupervisor', (req, res) => {
     db.all('SELECT * FROM supervisors', (err, rows) => {
         if (err) {
@@ -185,7 +197,25 @@ app.get('/upddelsupervisor', (req, res) => {
 
 //Update location form
 app.get('/updatelocation', (req, res) => {
-    res.render('updatelocation.njk', {title: "Update Asset Location"})
+    db.all('SELECT * FROM asset_location', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error');
+        }
+        const toParse = rows.map(row => ({assetLocationId: row.asset_location_id, csAssetId: row.cs_asset_id, client: row.client, startDate: row.start_date, endDate: row.end_date, description: row.description}));
+        db.all('SELECT * FROM assets', (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            }
+            const toParse2 = rows.map(row => ({asset:row.asset_name, csId: row.cs_asset_id}));
+            db.all('SELECT * FROM clients', (err, rows) => {
+                if (err) {
+                    return res.status(500).send('Database error');
+                }
+                const toParse3 = rows.map(row => ({client: row.client_name}));
+                res.render('updatelocation.njk', {title: "Update Asset Location", toParse, toParse2, toParse3});
+            })  
+        })
+    })
 })
 
 //Update link asset to asset type form
