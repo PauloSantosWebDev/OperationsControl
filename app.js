@@ -235,7 +235,20 @@ app.get('/linkassettype', (req, res) => {
 
 //Update link employee to funciton form
 app.get('/linkemployeefunction', (req, res) => {
-    res.render('linkemployeefunction.njk', {title: "Link Employee-Function"})
+    db.all('SELECT employee_id, first_name, last_name FROM employees', (err, rows) => {
+        if (err) {
+            res.status(500).send('Database error.');
+        }
+        const toParse = rows.map(row => ({employeeId: row.employee_id, firstName: row.first_name, lastName: row.last_name}));
+        db.all('SELECT function_id, function FROM functions', (err, rows) => {
+            if (err) {
+                res.status(500).send('Database error.');
+            }
+            const toParse2 = rows.map(row => ({functionId: row.function_id, function: row.function}));
+            res.render('linkemployeefunction.njk', {title: "Link Employee-Function", toParse, toParse2})
+        })
+    })
+    // res.render('linkemployeefunction.njk', {title: "Link Employee-Function"})
 })
 
 //Update link employee to qualification form

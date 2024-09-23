@@ -8,21 +8,23 @@
         <form class="row g-3">
             <div class="col-md-4">
                 <label for="inputLinkEmployee" class="form-label">Employee</label>
-                <select class="form-select">
-                    <option>Employee1</option>
-                    <option>Employee2</option>
+                <select class="form-select" id="selectEmployee">
+                    {% for opt in toParse %}
+                        <option value="{{opt.employeeId}}">{{opt.firstName + ' ' + opt.lastName}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-4">
                 <label for="inputLinkFunction" class="form-label">Function</label>
-                <select class="form-select">
-                    <option>Function1</option>
-                    <option>Function2</option>
+                <select class="form-select" id="selectFunction">
+                    {% for opt2 in toParse2 %}
+                        <option value="{{opt2.functionId}}">{{opt2.function}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-12" style="text-align: left;">
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Link</button>
+                <button type="button" class="btn btn-danger me-md-2">Link</button>
             </div>
         </form>
     </div>
