@@ -33,7 +33,8 @@ app.use(session({
 
 // Checking tables data
 // db.all('DROP TABLE asset_location', (err, rows) => {
-// db.all('SELECT * FROM asset_location', (err, rows) => {
+// db.all('SELECT * FROM employees_functions', (err, rows) => {
+// db.all('INSERT INTO employees_functions (function_id, employee_id) VALUES (3, 2)', (err, rows) => {
 //     if (err) {
 //         throw err;
 //     }
@@ -245,10 +246,29 @@ app.get('/linkemployeefunction', (req, res) => {
                 res.status(500).send('Database error.');
             }
             const toParse2 = rows.map(row => ({functionId: row.function_id, function: row.function}));
-            res.render('linkemployeefunction.njk', {title: "Link Employee-Function", toParse, toParse2})
+            db.all('SELECT * FROM employees_functions', (err, rows) => {
+                if (err) {
+                    res.status(500).send('Database error.');
+                }
+                let array = [];
+                let index = 0;
+                for (let elem of rows) {
+                    for (let e of toParse) {
+                        if (elem.employee_id === e.employeeId) {
+                            array.push({employee: e.firstName});
+                        }
+                    }
+                    for (let e of toParse2) {
+                        if (elem.function_id === e.functionId) {
+                            array[index].function = e.function;
+                        }
+                    }
+                    index++;
+                }
+                res.render('linkemployeefunction.njk', {title: "Link Employee-Function", toParse, toParse2, array})
+            })
         })
     })
-    // res.render('linkemployeefunction.njk', {title: "Link Employee-Function"})
 })
 
 //Update link employee to qualification form
