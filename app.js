@@ -33,6 +33,7 @@ app.use(session({
 
 // Checking tables data
 // db.all('DROP TABLE asset_location', (err, rows) => {
+// db.all('SELECT * FROM asset_location', (err, rows) => {
 //     if (err) {
 //         throw err;
 //     }

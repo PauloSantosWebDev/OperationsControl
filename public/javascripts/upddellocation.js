@@ -82,6 +82,14 @@ document.getElementById('js-update-record').addEventListener('click', async () =
     let endDate = document.getElementById('inputEndDate').value;
     let description = document.getElementById('assetDescription').value;
     
+    //I need to invert the date format to show dd/mm/yyyy instead of yyyy/mm/dd
+    if (startDate.split('-')[0].length === 4) { //if is needed because some computer have dd/mm/yyyy as defaul and then all the inversion is unnecessary
+        const invertedStartDate = startDate.split('-').reverse().join('-');
+        const invertedEndDate = endDate.split('-').reverse().join('-');
+        startDate = invertedStartDate;
+        endDate = invertedEndDate;
+    }
+
     if(!client || !startDate || !endDate || !description) {
         alert("FAILED! All fields required!");
         return
