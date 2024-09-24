@@ -32,6 +32,8 @@ app.use(session({
 }))
 
 // Checking tables data
+// db.all('DROP TABLE asset_not_available');
+// db.all('DROP TABLE employee_not_available');
 // db.all('DROP TABLE employees_qualifications', (err, rows) => {
 // db.all('SELECT * FROM employees_functions', (err, rows) => {
 // db.all('INSERT INTO employees_qualifications (employee_id, qualification_id, expire_date) VALUES (2, 2, 25-09-2024)', (err, rows) => {

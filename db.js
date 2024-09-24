@@ -20,13 +20,13 @@ db.run('CREATE TABLE IF NOT EXISTS assets (asset_id INTEGER PRIMARY KEY AUTOINCR
 db.run('CREATE TABLE IF NOT EXISTS assets_types (asset_type_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_type TEXT NOT NULL UNIQUE, description TEXT NOT NULL)');
 
 //Asset not available table
-db.run('CREATE TABLE IF NOT EXISTS asset_not_available (asset_not_available_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_id INTEGER NOT NULL, start_date TEXT NOT NULL, end_date TEXT NOT NULL, description TEXT, FOREIGN KEY (asset_id) REFERENCES assets(asset_id))');
+db.run('CREATE TABLE IF NOT EXISTS asset_not_available (asset_not_available_id INTEGER PRIMARY KEY AUTOINCREMENT, asset_id INTEGER NOT NULL, reason TEXT NOT NULL, start_date TEXT NOT NULL, end_date TEXT NOT NULL, description TEXT, FOREIGN KEY (asset_id) REFERENCES assets(asset_id))');
 
 //Employees table
 db.run('CREATE TABLE IF NOT EXISTS employees (employee_id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL, address TEXT NOT NULL, suburb TEXT NOT NULL, postcode INTEGER NOT NULL, phone TEXT NOT NULL, email TEXT NOT NULL)');
 
 //Employees not available table
-db.run('CREATE TABLE IF NOT EXISTS employee_not_available (employee_not_available_id INTEGER PRIMARY KEY AUTOINCREMENT, employee_id INTEGER NOT NULL, start_date TEXT NOT NULL, end_date TEXT NOT NULL, description TEXT, FOREIGN KEY (employee_id) REFERENCES employees(employee_id))');
+db.run('CREATE TABLE IF NOT EXISTS employee_not_available (employee_not_available_id INTEGER PRIMARY KEY AUTOINCREMENT, employee_id INTEGER NOT NULL, reason TEXT NOT NULL, start_date TEXT NOT NULL, end_date TEXT NOT NULL, description TEXT, FOREIGN KEY (employee_id) REFERENCES employees(employee_id))');
 
 //Qualifications table
 db.run('CREATE TABLE IF NOT EXISTS qualifications (qualification_id INTEGER PRIMARY KEY AUTOINCREMENT, qualification TEXT NOT NULL, qualification_code TEXT NOT NULL, description TEXT)');
@@ -41,7 +41,7 @@ db.run('CREATE TABLE IF NOT EXISTS employees_qualifications (employee_id INTEGER
 db.run('CREATE TABLE IF NOT EXISTS employees_functions (function_id INTEGER NOT NULL, employee_id INT NOT NULL, FOREIGN KEY (function_id) REFERENCES functions(function_id), FOREIGN KEY (employee_id) REFERENCES employees(employee_id))');
 
 //Assets-Assets types table
-db.run('CREATE TABLE IF NOT EXISTS asset_assettype (asset_id INT, asset_type_id INT, FOREIGN KEY (asset_id) REFERENCES assets(asset_id), FOREIGN KEY (asset_type_id) REFERENCES assets_types(asset_type_id))');
+//db.run('CREATE TABLE IF NOT EXISTS asset_assettype (asset_id INT, asset_type_id INT, FOREIGN KEY (asset_id) REFERENCES assets(asset_id), FOREIGN KEY (asset_type_id) REFERENCES assets_types(asset_type_id))');
 
 //Supervisors table
 db.run('CREATE TABLE IF NOT EXISTS supervisors (supervisor_id INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL, email TEXT, phone TEXT NOT NULL)');
