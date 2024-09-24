@@ -36,6 +36,7 @@
                 <tr>
                     <th scope="col" valign="middle" style="text-align: center;">Employee</th>
                     <th scope="col" valign="middle" style="text-align: center;">Function</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Unlink</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,6 +44,7 @@
                     <tr>
                         <td scope="col" valign="middle" style="text-align: center;">{{a.employee}}</td>
                         <td scope="col" valign="middle" style="text-align: center;">{{a.function}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;"><button type="button" class="btn btn-danger unlinkbtn" value="{{a.employee+'-'+a.function}}">Unlink</button></td>
                     </tr>
                 {% endfor %}
                 <tr>

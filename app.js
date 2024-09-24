@@ -255,7 +255,7 @@ app.get('/linkemployeefunction', (req, res) => {
                 for (let elem of rows) {
                     for (let e of toParse) {
                         if (elem.employee_id === e.employeeId) {
-                            array.push({employee: e.firstName});
+                            array.push({employee: e.firstName + ' ' + e.lastName});
                         }
                     }
                     for (let e of toParse2) {

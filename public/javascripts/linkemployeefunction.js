@@ -1,6 +1,6 @@
 //Event listeners
 
-//Link record
+//Link records
 document.getElementById('js-link-employee-function').addEventListener('click', async () => {
     let employeeId = document.getElementById('selectEmployee').value;
     let functionId = document.getElementById('selectFunction').value;
@@ -33,4 +33,15 @@ document.getElementById('js-link-employee-function').addEventListener('click', a
         console.error("Error: ", error);
         alert('There was an error fetching the data.');
     }
+})
+
+//Unlink records
+document.querySelectorAll('.unlinkbtn').forEach(e => {
+    e.addEventListener('click', () => {
+        const employee = e.value.split('-')[0];
+        const f = e.value.split('-')[1];
+        alert(`e.value: ${e.value}`)
+        alert(`employee: ${employee}`)
+        alert(`function: ${f}`)
+    })
 })
