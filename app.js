@@ -745,29 +745,59 @@ app.post('/updatelocation', (req, res) => {
 
 //Link employee to function
 app.post('/linkemployeefunction', (req, res) => {
-    const employeeId = req.body.employeeId;
-    const functionId = req.body.functionId;
-    let createLink = true;
+    const path = req.body.path;
+    
+    if (path === 'unlink') {
+        const employee = req.body.employee;
+        const f = req.body.f;
 
-    db.all('SELECT * FROM employees_functions WHERE employee_id = ?', [employeeId], (err, rows) => {
-        if (err) {
-            return res.status(500).send('Database error.');
-        } else {
-            for (let row of rows) {
-                if (row.function_id == functionId) {
-                    createLink = false;
-                    return res.status(200).json({body: "Link already created."});
-                }
-            }
-            if (createLink) {
-                db.run('INSERT INTO employees_functions(function_id, employee_id) VALUES (?, ?)', [functionId, employeeId], err =>{
-                    if (err) {
-                        return res.status(500).send('Database error.');
-                    } else {
-                        return res.status(200).json({body: "Successfully linked."});
-                    }
+        db.all("SELECT employee_id FROM employees WHERE CONCAT(first_name,' ',last_name) = ?", [employee], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                let targetEmployee = rows[0].employee_id;
+                db.all('SELECT function_id FROM functions WHERE function = ?', [f], (err, rows) => {
+                  if (err) {
+                    return res.status(500).send('Database error');
+                  } else {
+                    let targetFunction = rows[0].function_id;
+                    db.run('DELETE FROM employees_functions WHERE employee_id = ? AND function_id = ?', [targetEmployee, targetFunction], err => {
+                        if (err) {
+                            return res.status(500).send('Database error');
+                        } else {
+                            return res.status(200).json({body: "Sucessfully unlinked"})
+                        }
+                    })
+                  }
                 })
             }
-        }
-    })
+        })
+
+    } else {
+        const employeeId = req.body.employeeId;
+        const functionId = req.body.functionId;
+        let createLink = true;
+
+        db.all('SELECT * FROM employees_functions WHERE employee_id = ?', [employeeId], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error.');
+            } else {
+                for (let row of rows) {
+                    if (row.function_id == functionId) {
+                        createLink = false;
+                        return res.status(200).json({body: "Link already created."});
+                    }
+                }
+                if (createLink) {
+                    db.run('INSERT INTO employees_functions(function_id, employee_id) VALUES (?, ?)', [functionId, employeeId], err =>{
+                        if (err) {
+                            return res.status(500).send('Database error.');
+                        } else {
+                            return res.status(200).json({body: "Successfully linked."});
+                        }
+                    })
+                }
+            }
+        })
+    }
 })
