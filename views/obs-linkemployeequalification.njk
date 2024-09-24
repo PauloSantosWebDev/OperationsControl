@@ -1,0 +1,33 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">Employee to qualification form</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-4">
+                <label for="inputLinkEmployee" class="form-label">Employee</label>
+                <select class="form-select">
+                    <option>Employee1</option>
+                    <option>Employee2</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="inputLinkQualification" class="form-label">Qualification</label>
+                <select class="form-select">
+                    <option>Function1</option>
+                    <option>Function2</option>
+                </select>
+            </div>
+            <div class="col-12" style="text-align: left;">
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="submit" class="btn btn-danger me-md-2">Link</button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div class="container mt-5">
+        <h1>Area to show the data</h1>
+    </div>
+{% endblock %}

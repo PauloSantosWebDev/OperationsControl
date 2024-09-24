@@ -32,9 +32,9 @@ app.use(session({
 }))
 
 // Checking tables data
-// db.all('DROP TABLE employees_functions', (err, rows) => {
+// db.all('DROP TABLE employees_qualifications', (err, rows) => {
 // db.all('SELECT * FROM employees_functions', (err, rows) => {
-// db.all('INSERT INTO employees_functions (function_id, employee_id) VALUES (3, 2)', (err, rows) => {
+// db.all('INSERT INTO employees_qualifications (employee_id, qualification_id, expire_date) VALUES (2, 2, 25-09-2024)', (err, rows) => {
 //     if (err) {
 //         throw err;
 //     }
@@ -273,7 +273,40 @@ app.get('/linkemployeefunction', (req, res) => {
 
 //Update link employee to qualification form
 app.get('/linkemployeequalification', (req, res) => {
-    res.render('linkemployeequalification.njk', {title: "Link Employee-Qualification"})
+    db.all('SELECT employee_id, first_name, last_name FROM employees ORDER BY first_name', (err, rows) => {
+        if (err) {
+           return res.status(500).send('Database error.');
+        }
+        const toParse = rows.map(row => ({employeeId: row.employee_id, firstName: row.first_name, lastName: row.last_name}));
+        db.all('SELECT qualification_id, qualification FROM qualifications ORDER BY qualification', (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error.');
+            }
+            const toParse2 = rows.map(row => ({qualificationId: row.qualification_id, qualification: row.qualification}));
+            db.all('SELECT * FROM employees_qualifications', (err, rows) => {
+                if (err) {
+                    return res.status(500).send('Database error.');
+                }
+                let array = [];
+                let index = 0;
+                for (let elem of rows) {
+                    for (let e of toParse) {
+                        if (elem.employee_id === e.employeeId) {
+                            array.push({employee: e.firstName + ' ' + e.lastName});
+                        }
+                    }
+                    for (let e of toParse2) {
+                        if (elem.qualification_id === e.qualificationId) {
+                            array[index].qualification = e.qualification;
+                            array[index].expire = elem.expire_date;
+                        }
+                    }
+                    index++;
+                }
+                res.render('linkemployeequalification.njk', {title: "Link Employee-Qualification", toParse, toParse2, array})
+            })
+        })
+    })
 })
 
 //Employee's availability form
@@ -790,6 +823,66 @@ app.post('/linkemployeefunction', (req, res) => {
                 }
                 if (createLink) {
                     db.run('INSERT INTO employees_functions(function_id, employee_id) VALUES (?, ?)', [functionId, employeeId], err =>{
+                        if (err) {
+                            return res.status(500).send('Database error.');
+                        } else {
+                            return res.status(200).json({body: "Successfully linked."});
+                        }
+                    })
+                }
+            }
+        })
+    }
+})
+
+//Link employee to qualification
+app.post('/linkemployeequalification', (req, res) => {
+    const path = req.body.path;
+    
+    if (path === 'unlink') {
+        const employee = req.body.employee;
+        const q = req.body.q;
+
+        db.all("SELECT employee_id FROM employees WHERE CONCAT(first_name,' ',last_name) = ?", [employee], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                let targetEmployee = rows[0].employee_id;
+                db.all('SELECT qualification_id FROM qualifications WHERE qualification = ?', [q], (err, rows) => {
+                  if (err) {
+                    return res.status(500).send('Database error');
+                  } else {
+                    let targetQualification = rows[0].qualification_id;
+                    db.run('DELETE FROM employees_qualifications WHERE employee_id = ? AND qualification_id = ?', [targetEmployee, targetQualification], err => {
+                        if (err) {
+                            return res.status(500).send('Database error');
+                        } else {
+                            return res.status(200).json({body: "Sucessfully unlinked"})
+                        }
+                    })
+                  }
+                })
+            }
+        })
+
+    } else {
+        const employeeId = req.body.employeeId;
+        const qualificationId = req.body.qualificationId;
+        const expire = req.body.expire;
+        let createLink = true;
+
+        db.all('SELECT * FROM employees_qualifications WHERE employee_id = ?', [employeeId], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error.');
+            } else {
+                for (let row of rows) {
+                    if (row.qualification_id == qualificationId) {
+                        createLink = false;
+                        return res.status(200).json({body: "Link already created."});
+                    }
+                }
+                if (createLink) {
+                    db.run('INSERT INTO employees_qualifications(employee_id, qualification_id, expire_date) VALUES (?, ?, ?)', [employeeId, qualificationId, expire], err =>{
                         if (err) {
                             return res.status(500).send('Database error.');
                         } else {
