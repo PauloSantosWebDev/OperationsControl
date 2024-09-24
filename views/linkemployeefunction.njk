@@ -24,13 +24,13 @@
             </div>
             <div class="col-12" style="text-align: left;">
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="button" class="btn btn-danger me-md-2">Link</button>
+                <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" data-bs-target="#linkBtnCheck">Link</button>
             </div>
         </form>
     </div>
     <hr>
     <div class="container mt-5">
-        <h1>Area to show the data</h1>
+        <h1>Employee-Function Link Register</h1>
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
@@ -51,4 +51,25 @@
             </tbody>
         </table>
     </div>
+
+    <!--Confirmation form for Update button-->
+    <div class="modal fade" id="linkBtnCheck" tabindex="-1" aria-labelledby="linkBtnCheckLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assetAllocationLabel">Are you sure you want to link this employee to this function?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark me-md-2" data-bs-dismiss="modal">Cancel</button>
+                    {# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button> #}
+                    {# <button type="button" class="btn btn-primary">Allocation</button> #}
+                    <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" id="js-link-employee-function">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/linkemployeefunction.js"></script>
 {% endblock %}

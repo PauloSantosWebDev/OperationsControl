@@ -32,7 +32,7 @@ app.use(session({
 }))
 
 // Checking tables data
-// db.all('DROP TABLE asset_location', (err, rows) => {
+// db.all('DROP TABLE employees_functions', (err, rows) => {
 // db.all('SELECT * FROM employees_functions', (err, rows) => {
 // db.all('INSERT INTO employees_functions (function_id, employee_id) VALUES (3, 2)', (err, rows) => {
 //     if (err) {
@@ -236,19 +236,19 @@ app.get('/linkassettype', (req, res) => {
 
 //Update link employee to funciton form
 app.get('/linkemployeefunction', (req, res) => {
-    db.all('SELECT employee_id, first_name, last_name FROM employees', (err, rows) => {
+    db.all('SELECT employee_id, first_name, last_name FROM employees ORDER BY first_name', (err, rows) => {
         if (err) {
-            res.status(500).send('Database error.');
+           return res.status(500).send('Database error.');
         }
         const toParse = rows.map(row => ({employeeId: row.employee_id, firstName: row.first_name, lastName: row.last_name}));
-        db.all('SELECT function_id, function FROM functions', (err, rows) => {
+        db.all('SELECT function_id, function FROM functions ORDER BY function', (err, rows) => {
             if (err) {
-                res.status(500).send('Database error.');
+                return res.status(500).send('Database error.');
             }
             const toParse2 = rows.map(row => ({functionId: row.function_id, function: row.function}));
             db.all('SELECT * FROM employees_functions', (err, rows) => {
                 if (err) {
-                    res.status(500).send('Database error.');
+                    return res.status(500).send('Database error.');
                 }
                 let array = [];
                 let index = 0;
@@ -734,8 +734,40 @@ app.post('/updatelocation', (req, res) => {
                 return res.status(500).send('Database error');
             } else {
                 const toLoad = rows.map(row => ({client: row.client, startDate: row.start_date, endDate: row.end_date, description: row.description}));
-                res.status(200).json({body: toLoad[0]});
+                return res.status(200).json({body: toLoad[0]});
             }
         })
     }  
+})
+
+//-------------------------------------------------------------------
+//Link area
+
+//Link employee to function
+app.post('/linkemployeefunction', (req, res) => {
+    const employeeId = req.body.employeeId;
+    const functionId = req.body.functionId;
+    let createLink = true;
+
+    db.all('SELECT * FROM employees_functions WHERE employee_id = ?', [employeeId], (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            for (let row of rows) {
+                if (row.function_id == functionId) {
+                    createLink = false;
+                    return res.status(200).json({body: "Link already created."});
+                }
+            }
+            if (createLink) {
+                db.run('INSERT INTO employees_functions(function_id, employee_id) VALUES (?, ?)', [functionId, employeeId], err =>{
+                    if (err) {
+                        return res.status(500).send('Database error.');
+                    } else {
+                        return res.status(200).json({body: "Successfully linked."});
+                    }
+                })
+            }
+        }
+    })
 })
