@@ -330,7 +330,21 @@ app.get('/availabilityemployee', (req, res) => {
 
 //Assets' availability form
 app.get('/availabilityasset', (req, res) => {
-    res.render('availabilityasset.njk', {title: "Assets' availability"})
+    db.all('SELECT asset_id, asset_name FROM assets', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            const toParse = rows.map(row => ({assetId: row.asset_id, asset: row.asset_name}));
+            db.all('SELECT reason FROM unavailability WHERE category = ?', ["asset"], (err, rows) => {
+                if (err) {
+                    return res.status(500).send('Database error.');
+                } else {
+                    const toParse2 = rows.map(row => ({reason: row.reason}));
+                    return res.render('availabilityasset.njk', {title: "Assets' availability", toParse, toParse2})
+                }
+            })
+        }
+    })
 })
 
 //Reasons for asset and employee availability
@@ -472,7 +486,7 @@ app.post('/newlocation', (req, res) => {
 })
 
 //Unavailability Reasons for assets and employees
-app.post('/newreason', (req, res) =>{
+app.post('/newreason', (req, res) => {
     const category = req.body.category;
     const reason = req.body.reason;
     const description = req.body.description;
@@ -482,6 +496,23 @@ app.post('/newreason', (req, res) =>{
             return res.status(500).send('Database error.');
         } else {
             return res.status(200).json({body: "Successfully registered"});
+        }
+    })
+})
+
+//Asset availability page
+app.post('/availabilityasset', (req, res) => {
+    const assetId = req.body.assetId;
+    const reason = req.body.reason;
+    let startDate = req.body.startDate;
+    let endDate = req.body.endDate;
+    const description = req.body.description;
+
+    db.all('INSERT INTO asset_not_available (asset_id, reason, start_date, end_date, description) VALUES (?, ?, ?, ?, ?)', [assetId, reason, startDate, endDate, description], (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            return res.status(200).json({body: "Successfully registered."});
         }
     })
 })

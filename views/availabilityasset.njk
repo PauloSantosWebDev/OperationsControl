@@ -8,16 +8,18 @@
         <form class="row g-3">
             <div class="col-md-3">
                 <label for="inputAvailabilityAsset" class="form-label">Asset</label>
-                <select class="form-select">
-                    <option>Asset1</option>
-                    <option>Asset2</option>
+                <select class="form-select" id="selectAsset">
+                    {% for opt in toParse %}
+                        <option value="{{opt.assetId}}">{{opt.asset}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="inputReason" class="form-label">Reason</label>
-                <select class="form-select">
-                    <option>Reason1</option>
-                    <option>Reason2</option>
+                <select class="form-select" id="selectReason">
+                    {% for opt2 in toParse2 %}
+                        <option value="{{opt2.reason}}">{{opt2.reason}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">
@@ -29,17 +31,19 @@
                 <input type="date" class="form-control" id="inputEndDate">
             </div>
             <div class="mb-3">
-                <label for="employeeAvailabilityDescription" class="form-label">Description</label>
-                <textarea class="form-control" id="descriptionEmployeeAvailability" rows="3"></textarea>
+                <label for="assetAvailabilityDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="descriptionAssetAvailability" rows="3"></textarea>
             </div>
             <div class="col-12" style="text-align: right;">
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="submit" class="btn btn-danger me-md-2">Submit</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-new-asset-availability-btn">Submit</button>
             </div>
         </form>
     </div>
-    <hr>
+    {# <hr>
     <div class="container mt-5">
         <h1>Area to show the data</h1>
-    </div>
+    </div> #}
+
+    <script src="/javascripts/availabilityasset.js"></script>
 {% endblock %}
