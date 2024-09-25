@@ -243,6 +243,35 @@ app.get('/upddelreason', (req, res) =>{
     })
 })
 
+//Update/delete asset availability
+app.get('/upddelassetsavailability', (req, res) => {
+    db.all('SELECT * FROM asset_not_available', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            const toParse = rows.map(row => ({id: row.asset_not_available_id, assetId: row.asset_id, reason: row.reason, sDate: row.start_date, eDate: row.end_date, description: row.description}));
+            let assetName = [];
+            for (let elem of rows) {
+                assetName.push(elem.asset_id);
+            }
+            let placeholders = assetName.map(()=> '?').join(',');
+
+            db.all(`SELECT cs_asset_id, asset_name FROM assets WHERE asset_id IN (${placeholders})`, assetName, (err, rows) => {
+                if (err) {
+                    return res.status(500).send('Database error. Trying to get assets from asset_id.');
+                } else {
+                    let index = 0;
+                    toParse.forEach(e => {
+                        Object.assign(e, rows[index]);
+                        index++;
+                    })
+                    res.render('upddelassetsavailability.njk', {title: "Update/delete Assets Availability", toParse})
+                }
+            })
+        }
+    })
+})
+
 //Update link asset to asset type form
 app.get('/linkassettype', (req, res) => {
     res.render('linkassettype.njk', {title: "Link Asset-Asset type"})
@@ -325,7 +354,22 @@ app.get('/linkemployeequalification', (req, res) => {
 
 //Employee's availability form
 app.get('/availabilityemployee', (req, res) => {
-    res.render('availabilityemployee.njk', {title: "Employees' availability"})
+    db.all('SELECT employee_id, first_name, last_name FROM employees', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            const toParse = rows.map(row => ({employeeId: row.employee_id, firstName: row.first_name, lastName: row.last_name}));
+            db.all('SELECT reason FROM unavailability WHERE category = ?', ["employee"], (err, rows) => {
+                if (err) {
+                    return res.status(500).send('Database error.');
+                } else {
+                    const toParse2 = rows.map(row => ({reason: row.reason}));
+                    return res.render('availabilityemployee.njk', {title: "Employees' availability", toParse, toParse2})
+                }
+            })
+        }
+    })
+    // res.render('availabilityemployee.njk', {title: "Employees' availability"})
 })
 
 //Assets' availability form
@@ -509,6 +553,23 @@ app.post('/availabilityasset', (req, res) => {
     const description = req.body.description;
 
     db.all('INSERT INTO asset_not_available (asset_id, reason, start_date, end_date, description) VALUES (?, ?, ?, ?, ?)', [assetId, reason, startDate, endDate, description], (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            return res.status(200).json({body: "Successfully registered."});
+        }
+    })
+})
+
+//Employee availability page
+app.post('/availabilityemployee', (req, res) => {
+    const employeeId = req.body.employeeId;
+    const reason = req.body.reason;
+    let startDate = req.body.startDate;
+    let endDate = req.body.endDate;
+    const description = req.body.description;
+
+    db.all('INSERT INTO employee_not_available (employee_id, reason, start_date, end_date, description) VALUES (?, ?, ?, ?, ?)', [employeeId, reason, startDate, endDate, description], (err, rows) => {
         if (err) {
             return res.status(500).send('Database error.');
         } else {

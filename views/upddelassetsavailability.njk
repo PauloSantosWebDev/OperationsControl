@@ -1,0 +1,110 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">Asset's availability form</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-3">
+                <label for="inputAvailabilityAsset" class="form-label">Asset</label>
+                <select class="form-select" id="selectAsset">
+                    {% for opt in toParse %}
+                        <option value="{{opt.assetId}}">{{opt.asset}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputReason" class="form-label">Reason</label>
+                <select class="form-select" id="selectReason">
+                    {% for opt2 in toParse2 %}
+                        <option value="{{opt2.reason}}">{{opt2.reason}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputStartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="inputStartDate">
+            </div>
+            <div class="col-md-3">
+                <label for="inputEndDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="inputEndDate">
+            </div>
+            <div class="mb-3">
+                <label for="assetAvailabilityDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="descriptionAssetAvailability" rows="3"></textarea>
+            </div>
+            <div class="col-12" style="text-align: right;">
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-new-asset-availability-btn">Submit</button>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div class="container mt-5">
+        <h1>Assets Availability Register</h1>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" valign="middle" style="text-align: center;">Register Number</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Asset</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Reason</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Start Date</th>
+                    <th scope="col" valign="middle" style="text-align: center;">End Date</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in toParse %}
+                    <tr>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.id}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.cs_asset_id + '-' + t.asset_name}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.reason}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.sDate}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.eDate}}</td>
+                        <td scope="col" valign="middle" style="text-align: center; word-wrap: break-word; white-space: normal; max-width: 400px;">{{t.description}}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--Confirmation form for Delete button-->
+    <div class="modal fade" id="deleteBtnCheck" tabindex="-1" aria-labelledby="deleteBtnCheckLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assetAllocationLabel">Are you sure you want to delete this register?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark me-md-2" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" id="js-delete-record">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Confirmation form for Update button-->
+    <div class="modal fade" id="updateBtnCheck" tabindex="-1" aria-labelledby="updateBtnCheckLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assetAllocationLabel">Are you sure you want to update this register?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark me-md-2" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" id="js-update-record">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/availabilityasset.js"></script>
+{% endblock %}
