@@ -32,7 +32,7 @@ app.use(session({
 }))
 
 // Checking tables data
-// db.all('DROP TABLE unaval_asset');
+// db.all('DROP TABLE asset_not_available');
 // db.all('DROP TABLE unaval_employee');
 // db.all('DROP TABLE employees_qualifications', (err, rows) => {
 // db.all('SELECT * FROM employees_functions', (err, rows) => {
@@ -265,6 +265,7 @@ app.get('/upddelassetsavailability', (req, res) => {
                         Object.assign(e, rows[index]);
                         index++;
                     })
+                    
                     res.render('upddelassetsavailability.njk', {title: "Update/delete Assets Availability", toParse})
                 }
             })

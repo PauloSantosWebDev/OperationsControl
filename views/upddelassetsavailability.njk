@@ -7,18 +7,27 @@
     <div class="container mt-5">
         <form class="row g-3">
             <div class="col-md-3">
+                <label for="inputSelectRegister" class="form-label">Select Register Number</label>
+                <select class="form-select" id="selectRegister">
+                    {% for opt in toParse %}
+                    <option value="{{opt.id}}">{{opt.id}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <hr>
+            <div class="col-md-3">
                 <label for="inputAvailabilityAsset" class="form-label">Asset</label>
                 <select class="form-select" id="selectAsset">
                     {% for opt in toParse %}
-                        <option value="{{opt.assetId}}">{{opt.asset}}</option>
+                        <option value="{{opt.assetId}}">{{opt.asset_name}}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="inputReason" class="form-label">Reason</label>
                 <select class="form-select" id="selectReason">
-                    {% for opt2 in toParse2 %}
-                        <option value="{{opt2.reason}}">{{opt2.reason}}</option>
+                    {% for opt in toParse %}
+                        <option value="{{opt.reason}}">{{opt.reason}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -35,8 +44,9 @@
                 <textarea class="form-control" id="descriptionAssetAvailability" rows="3"></textarea>
             </div>
             <div class="col-12" style="text-align: right;">
+                <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" data-bs-target="#deleteBtnCheck">Delete</button>
                 <button type="reset" class="btn btn-dark me-md-2">Reset</button>
-                <button type="button" class="btn btn-danger me-md-2" id="js-new-asset-availability-btn">Submit</button>
+                <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" data-bs-target="#updateBtnCheck">Update</button>
             </div>
         </form>
     </div>
