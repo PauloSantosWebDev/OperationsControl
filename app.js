@@ -32,8 +32,8 @@ app.use(session({
 }))
 
 // Checking tables data
-// db.all('DROP TABLE asset_not_available');
-// db.all('DROP TABLE employee_not_available');
+// db.all('DROP TABLE unaval_asset');
+// db.all('DROP TABLE unaval_employee');
 // db.all('DROP TABLE employees_qualifications', (err, rows) => {
 // db.all('SELECT * FROM employees_functions', (err, rows) => {
 // db.all('INSERT INTO employees_qualifications (employee_id, qualification_id, expire_date) VALUES (2, 2, 25-09-2024)', (err, rows) => {
@@ -231,6 +231,18 @@ app.get('/updatelocation', (req, res) => {
     })
 })
 
+//Update/delete unavailability reasons
+app.get('/upddelreason', (req, res) =>{
+    db.all('SELECT * FROM unavailability', (err, rows) => {
+        if (err) {
+            res.status(500).send('Database error.');
+        } else {
+            const toParse = rows.map(row => ({id: row.unavailability_id, category: row.category, reason: row.reason, description: row.description}));
+            res.render('upddelreason.njk', {title: "Update/delete reason", toParse});
+        }
+    })
+})
+
 //Update link asset to asset type form
 app.get('/linkassettype', (req, res) => {
     res.render('linkassettype.njk', {title: "Link Asset-Asset type"})
@@ -319,6 +331,11 @@ app.get('/availabilityemployee', (req, res) => {
 //Assets' availability form
 app.get('/availabilityasset', (req, res) => {
     res.render('availabilityasset.njk', {title: "Assets' availability"})
+})
+
+//Reasons for asset and employee availability
+app.get('/newreason', (req, res) => {
+    res.render('newreason.njk', {title: "Unavailability Reasons"})
 })
 
 //-------------------------------------------------------------------------------------
@@ -452,6 +469,21 @@ app.post('/newlocation', (req, res) => {
             res.status(200).json({body: "Data inserted successfully into the asset locations' table."});
         }
     });
+})
+
+//Unavailability Reasons for assets and employees
+app.post('/newreason', (req, res) =>{
+    const category = req.body.category;
+    const reason = req.body.reason;
+    const description = req.body.description;
+
+    db.run('INSERT INTO unavailability (category, reason, description) VALUES (?, ?, ?)', [category, reason, description], err => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            return res.status(200).json({body: "Successfully registered"});
+        }
+    })
 })
 
 //------------------------------------------------------------------------------
@@ -773,6 +805,43 @@ app.post('/updatelocation', (req, res) => {
             }
         })
     }  
+})
+
+//Update/delete unavailability reasons
+app.post('/upddelreason', (req, res) => {
+    const selectRegister = req.body.selectRegister;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const category = req.body.category;
+        const reason = req.body.reason;
+        const description = req.body.description;
+
+        db.all('UPDATE unavailability SET category = ?, reason = ?, description = ? WHERE unavailability_id = ?', [category, reason, description, selectRegister], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM unavailability WHERE unavailability_id = ?', [selectRegister], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {
+        db.all('SELECT * FROM unavailability WHERE unavailability_id = ?', [selectRegister], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({category: row.category, reason: row.reason, description: row.description}));
+                res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }
 })
 
 //-------------------------------------------------------------------

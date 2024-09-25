@@ -61,4 +61,7 @@ db.run('CREATE TABLE IF NOT EXISTS allocations (allocation_id INTEGER PRIMARY KE
 //Asset location table
 db.run('CREATE TABLE IF NOT EXISTS asset_location (asset_location_id INTEGER PRIMARY KEY AUTOINCREMENT, cs_asset_id TEXT NOT NULL, client TEXT NOT NULL, start_date TEXT NOT NULL, end_date TEXT NOT NULL, description TEXT NOT NULL, FOREIGN KEY (cs_asset_id) REFERENCES assets(cs_asset_id), FOREIGN KEY (client) REFERENCES clients(client_name))');
 
+//Unavailability table
+db.run('CREATE TABLE IF NOT EXISTS unavailability (unavailability_id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT NOT NULL, reason TEXT NOT NULL, description TEXT NOT NULL)');
+
 module.exports = db;

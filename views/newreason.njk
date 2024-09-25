@@ -1,0 +1,32 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">Unavailability reasons form</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3">
+            <div class="col-md-5">
+                <label for="inputCategory" class="form-label">Category</label>
+                <select class="form-select" id="selectCategory">
+                    <option value="asset">For Assets</option>
+                    <option value="employee">For Employee</option>
+                </select>
+            </div>
+            <div class="col-md-7">
+                <label for="inputReason" class="form-label">Reason</label>
+                <input type="text" class="form-control" id="inputReason">
+            </div>
+            <div class="mb-3">
+                <label for="reasonDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="reasonDescription" rows="3"></textarea>
+            </div>
+            <div class="col-12" style="text-align: right;">
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-new-reason-btn">Register</button>
+            </div>
+        </form>
+    </div>
+    
+    <script src="/javascripts/newreason.js"></script>
+{% endblock %}
