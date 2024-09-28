@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container mt-5">
-        <h1 style="color: #E63C2B; font-weight: bold;">Update/delete assets' availability form</h1>
+        <h1 style="color: #E63C2B; font-weight: bold;">Update/delete employees' availability form</h1>
     </div>
     <div class="container mt-5">
         <form class="row g-3">
@@ -16,10 +16,10 @@
             </div>
             <hr>
             <div class="col-md-3">
-                <label for="inputAvailabilityAsset" class="form-label">Asset</label>
-                <select class="form-select" id="selectAsset">
+                <label for="inputAvailabilityEmployee" class="form-label">Employee</label>
+                <select class="form-select" id="selectEmployee">
                     {% for opt in toParse %}
-                        <option value="{{opt.assetId}}">{{opt.asset_name}}</option>
+                        <option value="{{opt.employeeId}}">{{opt.first_name + ' ' + opt.last_name}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -40,8 +40,8 @@
                 <input type="date" class="form-control" id="inputEndDate">
             </div>
             <div class="mb-3">
-                <label for="assetAvailabilityDescription" class="form-label">Description</label>
-                <textarea class="form-control" id="descriptionAssetAvailability" rows="3"></textarea>
+                <label for="employeeAvailabilityDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="descriptionEmployeeAvailability" rows="3"></textarea>
             </div>
             <div class="col-12" style="text-align: right;">
                 <button type="button" class="btn btn-danger me-md-2" data-bs-toggle="modal" data-bs-target="#deleteBtnCheck">Delete</button>
@@ -52,12 +52,12 @@
     </div>
     <hr>
     <div class="container mt-5">
-        <h1>Assets Availability Register</h1>
+        <h1>Employees' Availability Register</h1>
         <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                     <th scope="col" valign="middle" style="text-align: center;">Register Number</th>
-                    <th scope="col" valign="middle" style="text-align: center;">Asset</th>
+                    <th scope="col" valign="middle" style="text-align: center;">Employee</th>
                     <th scope="col" valign="middle" style="text-align: center;">Reason</th>
                     <th scope="col" valign="middle" style="text-align: center;">Start Date</th>
                     <th scope="col" valign="middle" style="text-align: center;">End Date</th>
@@ -68,7 +68,7 @@
                 {% for t in toParse %}
                     <tr>
                         <td scope="col" valign="middle" style="text-align: center;">{{t.id}}</td>
-                        <td scope="col" valign="middle" style="text-align: center;">{{t.cs_asset_id + '-' + t.asset_name}}</td>
+                        <td scope="col" valign="middle" style="text-align: center;">{{t.first_name + '-' + t.last_name}}</td>
                         <td scope="col" valign="middle" style="text-align: center;">{{t.reason}}</td>
                         <td scope="col" valign="middle" style="text-align: center;">{{t.sDate}}</td>
                         <td scope="col" valign="middle" style="text-align: center;">{{t.eDate}}</td>
@@ -116,5 +116,5 @@
         </div>
     </div>
 
-    <script src="/javascripts/upddelassetavailability.js"></script>
+    <script src="/javascripts/upddelemployeesavailability.js"></script>
 {% endblock %}

@@ -243,7 +243,7 @@ app.get('/upddelreason', (req, res) =>{
     })
 })
 
-//Update/delete asset availability
+//Update/delete assets availability
 app.get('/upddelassetsavailability', (req, res) => {
     db.all('SELECT * FROM asset_not_available', (err, rows) => {
         if (err) {
@@ -267,6 +267,36 @@ app.get('/upddelassetsavailability', (req, res) => {
                     })
                     
                     res.render('upddelassetsavailability.njk', {title: "Update/delete Assets Availability", toParse})
+                }
+            })
+        }
+    })
+})
+
+//Update/delete employees availability
+app.get('/upddelemployeesavailability', (req, res) => {
+    db.all('SELECT * FROM employee_not_available', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error.');
+        } else {
+            const toParse = rows.map(row => ({id: row.employee_not_available_id, employeeId: row.employee_id, reason: row.reason, sDate: row.start_date, eDate: row.end_date, description: row.description}));
+            let employeeName = [];
+            for (let elem of rows) {
+                employeeName.push(elem.employee_id);
+            }
+            let placeholders = employeeName.map(()=> '?').join(',');
+
+            db.all(`SELECT first_name, last_name FROM employees WHERE employee_id IN (${placeholders})`, employeeName, (err, rows) => {
+                if (err) {
+                    return res.status(500).send('Database error. Trying to get employee_id from employees.');
+                } else {
+                    let index = 0;
+                    toParse.forEach(e => {
+                        Object.assign(e, rows[index]);
+                        index++;
+                    })
+                    
+                    res.render('upddelemployeesavailability.njk', {title: "Update/delete Employees Availability", toParse})
                 }
             })
         }
@@ -970,6 +1000,45 @@ app.post('/upddelassetsavailability', (req, res) => {
                 return res.status(500).send('Database error');
             } else {
                 const toLoad = rows.map(row => ({asset: row.asset_id, reason: row.reason, startDate: row.start_date, endDate: row.end_date, description: row.description}));
+                return res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }
+})
+
+//Update/delete asset availability
+app.post('/upddelemployeesavailability', (req, res) => {
+    const register = req.body.register;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const employee = req.body.employee;
+        const reason = req.body.reason;
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const description = req.body.description;
+
+        db.all('UPDATE employee_not_available SET employee_id = ?, reason = ?, start_date = ?, end_date = ?, description = ? WHERE employee_not_available_id = ?', [employee, reason, startDate, endDate, description, register], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM employee_not_available WHERE employee_not_available_id = ?', [register], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {        
+        db.all('SELECT * FROM employee_not_available WHERE employee_not_available_id = ?', [register], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({employee: row.employee_id, reason: row.reason, startDate: row.start_date, endDate: row.end_date, description: row.description}));
                 return res.status(200).json({body: toLoad[0]});
             }
         })
