@@ -937,6 +937,45 @@ app.post('/upddelreason', (req, res) => {
     }
 })
 
+//Update/delete asset availability
+app.post('/upddelassetsavailability', (req, res) => {
+    const register = req.body.register;
+    const executionPath = req.body.executionPath;
+
+    if (executionPath === "update") {
+        const asset = req.body.asset;
+        const reason = req.body.reason;
+        const startDate = req.body.startDate;
+        const endDate = req.body.endDate;
+        const description = req.body.description;
+
+        db.all('UPDATE asset_not_available SET asset_id = ?, reason = ?, start_date = ?, end_date = ?, description = ? WHERE asset_not_available_id = ?', [asset, reason, startDate, endDate, description, register], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully updated"});
+            }
+        })
+    } else if (executionPath === "delete") {
+        db.all('DELETE FROM asset_not_available WHERE asset_not_available_id = ?', [register], (err) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                res.status(200).json({body: "Successfully deleted"});
+            }
+        })
+    } else {        
+        db.all('SELECT * FROM asset_not_available WHERE asset_not_available_id = ?', [register], (err, rows) => {
+            if (err) {
+                return res.status(500).send('Database error');
+            } else {
+                const toLoad = rows.map(row => ({asset: row.asset_id, reason: row.reason, startDate: row.start_date, endDate: row.end_date, description: row.description}));
+                return res.status(200).json({body: toLoad[0]});
+            }
+        })
+    }
+})
+
 //-------------------------------------------------------------------
 //Link area
 
