@@ -59,9 +59,24 @@ app.listen(port, () => {
 
 //Home page
 app.get('/', (req, res) => {
-    // res.render('index.njk', {title: 'Home page'})
-    // res.render('daysheet.njk', {title: 'Home page'})
-    res.render('formsdaysheet.njk', {title: 'Daysheet'})
+    db.all('SELECT client_id, client_name FROM clients', (err, rows) => {
+        if (err) {
+            res.status(500).send('Database error. Error getting data from clients table.')
+        }
+        const toParse = rows;
+        db.all('SELECT supervisor_id, first_name, last_name FROM supervisors', (err, rows) => {
+            if (err) {
+                res.status(500).send('Database error. Error getting data from supervisors table.')
+            }
+            let index = 0;
+            toParse.forEach(e => {
+                Object.assign(e, rows[index]);
+                index++;
+            })
+            res.render('formsdaysheet.njk', {title: 'Daysheet', toParse})
+        })
+    })
+    // res.render('formsdaysheet.njk', {title: 'Daysheet'})
 })
 
 //New client page

@@ -12,6 +12,24 @@
             <div class="modal-body">
                 <form class="row g-3">
                     <div class="col-md-6">
+                        <label for="inputSupervisor" class="form-label">Supervisor</label>
+                        <select id="selectSupervisor" class="form-select">
+                            {% for opt in toParse %}
+                                {% if opt.supervisor_id %}
+                                    <option value="{{opt.supervisor_id}}">{{opt.first_name + ' ' + opt.last_name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>                    
+                    <div class="col-md-6">
+                        <label for="inputClient" class="form-label">Client</label>
+                        <select id="selectClientName" class="form-select">
+                            {% for opt in toParse %}
+                                <option value="{{opt.client_id}}">{{opt.client_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
                         <label for="inputStartDate" class="form-label">Start Date</label>
                         <input type="date" class="form-control" id="inputStartDate">
                     </div>
@@ -19,15 +37,8 @@
                         <label for="inputEndDate" class="form-label">End Date</label>
                         <input type="date" class="form-control" id="inputEndDate">
                     </div>
-                    <div class="col-md-6">
-                        <label for="inputClient" class="form-label">Client</label>
-                        <input type="text" class="form-control" id="inputClient">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputSupervisor" class="form-label">Supervisor</label>
-                        <input type="number" class="form-control" id="inputSupervisor">
-                    </div>
-                    <div class="col-12">
+                    
+                    {# <div class="col-12">
                         <label for="inputAddress" class="form-label">Job Address</label>
                         <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
                     </div>
@@ -51,7 +62,7 @@
                     <div class="mb-3">
                         <label for="inputExtraInfo" class="form-label">Comments</label>
                         <textarea class="form-control" id="inputExtraInfo" rows="3" placeholder="Write here details about the job and any additional equipment required. Example: counterweight, dog box, spreader bar..."></textarea>
-                    </div>
+                    </div> #}
 
                     <!--Stat and end time - Yard and Site-->
                     <div class="col-md-3">
@@ -116,7 +127,7 @@
                     </div>
 
                     <!--Number of assets and people required in the job-->
-                    <div class="col-md-6">
+                    {# <div class="col-md-6">
                         <label for="inputNumberAssets" class="form-label">Number of assets required</label>
                         <select id="inputNumberAssets" class="form-select">
                             {% for i in range(1, 31) %}
@@ -131,7 +142,7 @@
                                 <option>{{i}}</option>
                             {% endfor %}
                         </select>
-                    </div>
+                    </div> #}
                     {# <div id="formAsset">
                     </div> #}
                     {# <div id="formPersonnel">
@@ -142,7 +153,7 @@
             <div class="modal-footer">
                 {# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> #}
                 {# <button type="button" class="btn btn-primary">Allocation</button> #}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#assetAllocation" id="btnAllocationAssets">Assets</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#assetAllocation" id="btnAllocationAssets">Next</button>
             </div>
         </div>
     </div>
