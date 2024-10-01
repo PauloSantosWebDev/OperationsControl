@@ -14,17 +14,15 @@
                     <div class="col-md-6">
                         <label for="inputSupervisor" class="form-label">Supervisor</label>
                         <select id="selectSupervisor" class="form-select">
-                            {% for opt in toParse %}
-                                {% if opt.supervisor_id %}
-                                    <option value="{{opt.supervisor_id}}">{{opt.first_name + ' ' + opt.last_name}}</option>
-                                {% endif %}
+                            {% for opt in supervisors %}
+                                <option value="{{opt.supervisor_id}}">{{opt.first_name + ' ' + opt.last_name}}</option>
                             {% endfor %}
                         </select>
                     </div>                    
                     <div class="col-md-6">
                         <label for="inputClient" class="form-label">Client</label>
                         <select id="selectClientName" class="form-select">
-                            {% for opt in toParse %}
+                            {% for opt in clients %}
                                 <option value="{{opt.client_id}}">{{opt.client_name}}</option>
                             {% endfor %}
                         </select>
@@ -225,6 +223,49 @@
                 {# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button> #}
                 {# <button type="button" class="btn btn-primary">Allocation</button> #}
                 <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<!-- Modal Structure for assets' availability check -->
+<div class="modal fade" id="availabilityCheck" tabindex="-1" aria-labelledby="personnelAllocationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="personnelAllocationLabel">Assets' Availability Check</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3">
+                    {% for i in range(1,6)%}
+                        <div class="col-md-4">
+                            <label for="assetsAvailabilityCheck{{i}}" class="form-label">Asset - {{i}}</label>
+                            <select id="assetsAvailabilityCheck{{i}}" class="form-select assetAndDate">
+                                {% for opt in assets %}
+                                    <option value="{{opt.asset_id}}">{{opt.cs_asset_id + ' - ' + opt.asset_name}}</option>
+                                {% endfor %}                           
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputStartDate{{i}}" class="form-label">Start Date</label>
+                            <input type="date" class="form-control assetAndDate" id="inputStartDate{{i}}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputEndDate{{i}}" class="form-label">End Date</label>
+                            <input type="date" class="form-control assetAndDate" id="inputEndDate{{i}}">
+                        </div>
+                    {% endfor %}
+                    <div id="formPersonnel">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button> #}
+                {# <button type="button" class="btn btn-primary">Allocation</button> #}
+                <button type="button" class="btn btn-primary" id="btnAvailabilityCheck">Check</button>
             </div>
         </div>
     </div>

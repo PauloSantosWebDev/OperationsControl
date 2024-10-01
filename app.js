@@ -63,17 +63,24 @@ app.get('/', (req, res) => {
         if (err) {
             res.status(500).send('Database error. Error getting data from clients table.')
         }
-        const toParse = rows;
+        const clients = rows;
         db.all('SELECT supervisor_id, first_name, last_name FROM supervisors', (err, rows) => {
             if (err) {
                 res.status(500).send('Database error. Error getting data from supervisors table.')
             }
-            let index = 0;
-            toParse.forEach(e => {
-                Object.assign(e, rows[index]);
-                index++;
+            const supervisors = rows;
+            // let index = 0;
+            // toParse.forEach(e => {
+            //     Object.assign(e, rows[index]);
+            //     index++;
+            // })
+            db.all('SELECT asset_id, cs_asset_id, asset_name FROM assets', (err, rows) => {
+                if (err) {
+                    res.status(500).send('Database error. Error getting data from supervisors table.')
+                }
+                const assets = rows;
+                res.render('formsdaysheet.njk', {title: 'Daysheet', clients, supervisors, assets})
             })
-            res.render('formsdaysheet.njk', {title: 'Daysheet', toParse})
         })
     })
     // res.render('formsdaysheet.njk', {title: 'Daysheet'})

@@ -52,9 +52,23 @@ function AssetPersonnelFields(qAssets = 0, qPersonnel = 0) {
     return
 }
 
+//Function to run assets' availability check
+function checkAvailability () {
+    const assetsAndDatesToCheck = [];
+    const assetsAndDatesToCheckObj = [];
+    document.querySelectorAll(".assetAndDate").forEach(e => assetsAndDatesToCheck.push(e.value));
+    for (let i = 0; i < assetsAndDatesToCheck.length; i+= 3) {
+        assetsAndDatesToCheckObj.push({asset: assetsAndDatesToCheck[i], startDate: assetsAndDatesToCheck[i + 1], endDate: assetsAndDatesToCheck[i + 2]});
+    }
+    
+    alert(assetsAndDatesToCheckObj[0].asset);
+    alert('Data ready to send to server. Line 66 of daysheet.js');
+}
+
 //Event listener
 // document.getElementById('inputNumberAssets').addEventListener('change', createFields);
 // document.getElementById('inputNumberEmployees').addEventListener('change', createFields);
 document.getElementById('btnAllocationAssets').addEventListener('click', createFields);
 document.getElementById('btnAllocationPersonnel').addEventListener('click', createFields);
+document.getElementById('btnAvailabilityCheck').addEventListener('click', checkAvailability);
 
