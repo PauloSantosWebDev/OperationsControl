@@ -36,7 +36,7 @@ app.use(session({
 // db.all('DROP TABLE unaval_employee');
 // db.all('DROP TABLE employees_qualifications', (err, rows) => {
 // db.all('SELECT * FROM asset_taken', (err, rows) => {
-// db.all('INSERT INTO asset_taken (asset_id, date) VALUES (4, ?)', ["2024-10-03"], (err, rows) => {
+// db.all('INSERT INTO asset_taken (asset_id, date) VALUES (6, ?)', ["2024-12-10"], (err, rows) => {
 //     if (err) {
 //         throw err;
 //     }
@@ -1198,11 +1198,22 @@ app.post('/', (req, res) => {
         return element.endDate > current ? element.endDate : current;
     }, "1900-01-01");
 
-    db.all('SELECT asset_id FROM (SELECT * FROM asset_taken WHERE date >= ? AND date <= ?)', [startDate, endDate], (err, rows) => {
+    // console.log(assetsAndDatesToCheck);
+
+    db.all('SELECT * FROM (SELECT * FROM asset_taken WHERE date >= ? AND date <= ?)', [startDate, endDate], (err, rows) => {
         if (err) {
             return res.status(500).send('Database error. Error checking at asset_taken table');
         }
-        console.log('Working');
-        console.log(rows);
+        const asset = [[],[],[],[],[]]
+        let index = 0;
+        assetsAndDatesToCheck.map(e => {
+            for (let el of rows) {
+                if (Number(e.asset) === el.asset_id) {
+                    asset[index].push(el);
+                }
+            }
+            index++;
+        })
+        return res.status(200).json({body: asset});
     })
 })

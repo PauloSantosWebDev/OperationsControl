@@ -80,8 +80,9 @@ async function checkAvailability () {
         const response = await fetch("/", options);
         if (response.ok) {
             const result = await response.json();
-            alert (`Success: ${result.body}`);
-            location.reload();
+            alert (result.body[0][0].asset_id);
+            document.getElementById('btnAvailabilityCheckSummary').click();
+            // location.reload();
         } else {
             const errorResult = await response.json();
             alert(`Error: ${errorResult.body}`);
@@ -93,8 +94,8 @@ async function checkAvailability () {
 
 
     
-    alert(assetsAndDatesToCheckObj[0].asset);
-    alert('Data ready to send to server. Line 66 of daysheet.js');
+    // alert(assetsAndDatesToCheckObj[0].asset);
+    // alert('Data ready to send to server. Line 66 of daysheet.js');
 }
 
 //Event listener
