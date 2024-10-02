@@ -1198,9 +1198,7 @@ app.post('/', (req, res) => {
         return element.endDate > current ? element.endDate : current;
     }, "1900-01-01");
 
-    // console.log(assetsAndDatesToCheck);
-
-    db.all('SELECT * FROM (SELECT * FROM asset_taken WHERE date >= ? AND date <= ?)', [startDate, endDate], (err, rows) => {
+    db.all('SELECT * FROM asset_taken WHERE date >= ? AND date <= ?', [startDate, endDate], (err, rows) => {
         if (err) {
             return res.status(500).send('Database error. Error checking at asset_taken table');
         }
@@ -1214,6 +1212,7 @@ app.post('/', (req, res) => {
             }
             index++;
         })
+        console.log(asset);
         return res.status(200).json({body: asset});
     })
 })

@@ -158,6 +158,7 @@
 </div>
 
 <!-- Modal Structure for the asset allocation section -->
+<!--DELETE-->
 <div class="modal fade" id="assetAllocation" tabindex="-1" aria-labelledby="assetAllocationLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -205,6 +206,7 @@
 </div>
 
 <!-- Modal Structure for the personnel allocation section -->
+<!--DELETE-->
 <div class="modal fade" id="personnelAllocation" tabindex="-1" aria-labelledby="personnelAllocationLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -243,6 +245,7 @@
                         <div class="col-md-4">
                             <label for="assetsAvailabilityCheck{{i}}" class="form-label">Asset - {{i}}</label>
                             <select id="assetsAvailabilityCheck{{i}}" class="form-select assetAndDate">
+                                <option value=0></option>
                                 {% for opt in assets %}
                                     <option value="{{opt.asset_id}}">{{opt.cs_asset_id + ' - ' + opt.asset_name}}</option>
                                 {% endfor %}                           
@@ -250,11 +253,11 @@
                         </div>
                         <div class="col-md-4">
                             <label for="inputStartDate{{i}}" class="form-label">Start Date</label>
-                            <input type="date" class="form-control assetAndDate" id="inputStartDate{{i}}">
+                            <input type="date" class="form-control assetAndDate" id="inputStartDate{{i}}" disabled>
                         </div>
                         <div class="col-md-4">
                             <label for="inputEndDate{{i}}" class="form-label">End Date</label>
-                            <input type="date" class="form-control assetAndDate" id="inputEndDate{{i}}">
+                            <input type="date" class="form-control assetAndDate" id="inputEndDate{{i}}" disabled>
                         </div>
                     {% endfor %}
                     <div id="formPersonnel">
@@ -280,7 +283,7 @@
                 <h5 class="modal-title" id="personnelAllocationLabel">Assets' Availability Response</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="summaryAssetsAvailability">
                 <p> What to write? </p>
             </div>
             <div class="modal-footer">

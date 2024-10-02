@@ -17,39 +17,65 @@ document.getElementById('datePicker').addEventListener('change', displayDate);
 
 //--------------------------------------------------------------------------------------------------------
 //Fuction to automatically add the assets and crews' dropdown fields
-function createFields() {
-    let qAssets = document.getElementById('inputNumberAssets').value;
-    let qPersonnel = document.getElementById('inputNumberEmployees').value;
-    // console.log(`The quantity of assets is: ${qAssets}`)
-    AssetPersonnelFields(qAssets, qPersonnel);
-}
+// function createFields() {
+//     let qAssets = document.getElementById('inputNumberAssets').value;
+//     let qPersonnel = document.getElementById('inputNumberEmployees').value;
+//     // console.log(`The quantity of assets is: ${qAssets}`)
+//     AssetPersonnelFields(qAssets, qPersonnel);
+// }
 
-function AssetPersonnelFields(qAssets = 0, qPersonnel = 0) {
-    let accumulator = "";
-    for(let i = 0; i < qAssets; i++){
-        accumulator = accumulator +
-        `<div class="col-md-12">
-            <label for="inputAssets${i + 1}" class="form-label">Asset - ${i + 1}</label>
-            <select id="inputAssets${i + 1}" class="form-select">
-                <option>working</option>
-            </select>
-        </div>`    
-    }  
-    document.getElementById('formAsset').innerHTML = accumulator;
+// function AssetPersonnelFields(qAssets = 0, qPersonnel = 0) {
+//     let accumulator = "";
+//     for(let i = 0; i < qAssets; i++){
+//         accumulator = accumulator +
+//         `<div class="col-md-12">
+//             <label for="inputAssets${i + 1}" class="form-label">Asset - ${i + 1}</label>
+//             <select id="inputAssets${i + 1}" class="form-select">
+//                 <option>working</option>
+//             </select>
+//         </div>`    
+//     }  
+//     document.getElementById('formAsset').innerHTML = accumulator;
 
-    accumulator = "";
+//     accumulator = "";
 
-    for(let i = 0; i < qPersonnel; i++) {
-        accumulator = accumulator +
-        `<div class="col-md-12">
-            <label for="inputPersonnel${i + 1}" class="form-label">Personnel - ${i + 1}</label>
-            <select id="inputPersonnel${i + 1}" class="form-select">
-                <option>working</option>
-            </select>
-        </div>`
-    }
-    document.getElementById('formPersonnel').innerHTML = accumulator;
-    return
+//     for(let i = 0; i < qPersonnel; i++) {
+//         accumulator = accumulator +
+//         `<div class="col-md-12">
+//             <label for="inputPersonnel${i + 1}" class="form-label">Personnel - ${i + 1}</label>
+//             <select id="inputPersonnel${i + 1}" class="form-select">
+//                 <option>working</option>
+//             </select>
+//         </div>`
+//     }
+//     document.getElementById('formPersonnel').innerHTML = accumulator;
+//     return
+// }
+
+//Function to create assets' availability summary
+function assetAvailabilitySummary (body) {
+    alert('Inside assetAvailabilitySummary');
+    const container = document.getElementById('summaryAssetsAvailability');
+    const asset1 = document.createElement('p');
+    let index = 1
+    body.forEach(e => {
+        if (e.length === 0) {
+            switch (index) {
+                case 1:
+                    asset1.textContent = "Available"
+                    break;
+                default:
+                    alert('No case found.')
+            }
+        }
+        container.appendChild(asset1);
+    })
+    // `<p>Asset${} - ' '<p>${}</p></p>
+    
+    
+    
+    // `
+
 }
 
 //Function to run assets' availability check
@@ -80,7 +106,8 @@ async function checkAvailability () {
         const response = await fetch("/", options);
         if (response.ok) {
             const result = await response.json();
-            alert (result.body[0][0].asset_id);
+            // alert (result.body[0][0].asset_id);
+            assetAvailabilitySummary(result.body);
             document.getElementById('btnAvailabilityCheckSummary').click();
             // location.reload();
         } else {
@@ -89,7 +116,7 @@ async function checkAvailability () {
         }
     } catch (error) {
         console.error("Error: ", error);
-        alert('There was an error fetching the data.');
+        alert('There was an error fetching the data from asset_taken.');
     }
 
 
@@ -98,10 +125,16 @@ async function checkAvailability () {
     // alert('Data ready to send to server. Line 66 of daysheet.js');
 }
 
+//Function to keep track and allow changes in the check asset availability fields
+function allowChangeCheckAvailability () {
+    alert('Changes happening.')
+}
+
 //Event listener
 // document.getElementById('inputNumberAssets').addEventListener('change', createFields);
 // document.getElementById('inputNumberEmployees').addEventListener('change', createFields);
-document.getElementById('btnAllocationAssets').addEventListener('click', createFields);
-document.getElementById('btnAllocationPersonnel').addEventListener('click', createFields);
+// document.getElementById('btnAllocationAssets').addEventListener('click', createFields);
+// document.getElementById('btnAllocationPersonnel').addEventListener('click', createFields);
 document.getElementById('btnAvailabilityCheck').addEventListener('click', checkAvailability);
 
+document.querySelectorAll(".assetAndDate").forEach(e => e.addEventListener('change', allowChangeCheckAvailability));
