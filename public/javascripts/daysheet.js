@@ -53,13 +53,45 @@ function AssetPersonnelFields(qAssets = 0, qPersonnel = 0) {
 }
 
 //Function to run assets' availability check
-function checkAvailability () {
+async function checkAvailability () {
     const assetsAndDatesToCheck = [];
     const assetsAndDatesToCheckObj = [];
     document.querySelectorAll(".assetAndDate").forEach(e => assetsAndDatesToCheck.push(e.value));
     for (let i = 0; i < assetsAndDatesToCheck.length; i+= 3) {
+        if (assetsAndDatesToCheck[i + 1] > assetsAndDatesToCheck[i + 2]) {
+            alert('Please ensure the start time is earlier than the end time.');
+            break;
+        }
+        if (!assetsAndDatesToCheck[i + 1] || !assetsAndDatesToCheck[i + 2]) {
+            continue;
+        }
         assetsAndDatesToCheckObj.push({asset: assetsAndDatesToCheck[i], startDate: assetsAndDatesToCheck[i + 1], endDate: assetsAndDatesToCheck[i + 2]});
     }
+
+    const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({assetsAndDatesToCheckObj})
+    };
+
+    try {
+        const response = await fetch("/", options);
+        if (response.ok) {
+            const result = await response.json();
+            alert (`Success: ${result.body}`);
+            location.reload();
+        } else {
+            const errorResult = await response.json();
+            alert(`Error: ${errorResult.body}`);
+        }
+    } catch (error) {
+        console.error("Error: ", error);
+        alert('There was an error fetching the data.');
+    }
+
+
     
     alert(assetsAndDatesToCheckObj[0].asset);
     alert('Data ready to send to server. Line 66 of daysheet.js');

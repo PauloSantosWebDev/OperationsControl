@@ -35,8 +35,8 @@ app.use(session({
 // db.all('DROP TABLE asset_not_available');
 // db.all('DROP TABLE unaval_employee');
 // db.all('DROP TABLE employees_qualifications', (err, rows) => {
-// db.all('SELECT * FROM employees_functions', (err, rows) => {
-// db.all('INSERT INTO employees_qualifications (employee_id, qualification_id, expire_date) VALUES (2, 2, 25-09-2024)', (err, rows) => {
+// db.all('SELECT * FROM asset_taken', (err, rows) => {
+// db.all('INSERT INTO asset_taken (asset_id, date) VALUES (4, ?)', ["2024-10-03"], (err, rows) => {
 //     if (err) {
 //         throw err;
 //     }
@@ -69,11 +69,6 @@ app.get('/', (req, res) => {
                 res.status(500).send('Database error. Error getting data from supervisors table.')
             }
             const supervisors = rows;
-            // let index = 0;
-            // toParse.forEach(e => {
-            //     Object.assign(e, rows[index]);
-            //     index++;
-            // })
             db.all('SELECT asset_id, cs_asset_id, asset_name FROM assets', (err, rows) => {
                 if (err) {
                     res.status(500).send('Database error. Error getting data from supervisors table.')
@@ -1187,4 +1182,27 @@ app.post('/linkemployeequalification', (req, res) => {
             }
         })
     }
+})
+
+//-----------------------------------------------------------------------
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//Daysheet area
+app.post('/', (req, res) => {
+    const assetsAndDatesToCheck = req.body.assetsAndDatesToCheckObj;
+
+    const startDate = assetsAndDatesToCheck.reduce((current, element) => {
+        return element.startDate < current ? element.startDate : current;
+    }, "2200-01-01");
+
+    const endDate = assetsAndDatesToCheck.reduce((current, element) => {
+        return element.endDate > current ? element.endDate : current;
+    }, "1900-01-01");
+
+    db.all('SELECT asset_id FROM (SELECT * FROM asset_taken WHERE date >= ? AND date <= ?)', [startDate, endDate], (err, rows) => {
+        if (err) {
+            return res.status(500).send('Database error. Error checking at asset_taken table');
+        }
+        console.log('Working');
+        console.log(rows);
+    })
 })
