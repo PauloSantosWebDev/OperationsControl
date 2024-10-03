@@ -244,8 +244,9 @@
                     {% for i in range(1,6)%}
                         <div class="col-md-4">
                             <label for="assetsAvailabilityCheck{{i}}" class="form-label">Asset - {{i}}</label>
-                            <select id="assetsAvailabilityCheck{{i}}" class="form-select assetAndDate">
-                                <option value=0></option>
+                            <select id="assetsAvailabilityCheck{{i}}" class="form-select assetAndDate" disabled>
+                                {# <option value=0></option> #}
+                                <option selected></option>
                                 {% for opt in assets %}
                                     <option value="{{opt.asset_id}}">{{opt.cs_asset_id + ' - ' + opt.asset_name}}</option>
                                 {% endfor %}                           

@@ -78,15 +78,47 @@ function assetAvailabilitySummary (body) {
 
 }
 
+//Function to restart assets check availability
+function restartAssetsCheckAvailabilityForm () {
+    document.querySelectorAll(".assetAndDate").forEach((e, i) => {
+        e.value = "";
+        if (i > 2) {
+            e.disabled = true;
+        }
+    });
+}
+
+
 //Function to run assets' availability check
 async function checkAvailability () {
     const assetsAndDatesToCheck = [];
     const assetsAndDatesToCheckObj = [];
+    let countNotEmpty = 0, countAbled = 0;
+    let formReadyToSend = true;
+    document.querySelectorAll(".assetAndDate").forEach(e => {
+        if (e.value) {
+            countNotEmpty++;
+        }
+    });
+    document.querySelectorAll(".assetAndDate").forEach((e, i) => { //this part is just to make sure the form doesn't have filled rows after empty ones.
+        if (i >= countNotEmpty) { //this if makes sure only the initial indexes are considered.
+            return
+        } 
+        if (!e.value) { //this if the index one checks if the information is not following the flow it should
+            formReadyToSend = false;
+        }
+    });
+
+    if (!formReadyToSend) {
+        alert('Ensure there are no empty fields before any filled ones.')
+        return
+    }
+    
     document.querySelectorAll(".assetAndDate").forEach(e => assetsAndDatesToCheck.push(e.value));
     for (let i = 0; i < assetsAndDatesToCheck.length; i+= 3) {
         if (assetsAndDatesToCheck[i + 1] > assetsAndDatesToCheck[i + 2]) {
             alert('Please ensure the start time is earlier than the end time.');
-            break;
+            return;
         }
         if (!assetsAndDatesToCheck[i + 1] || !assetsAndDatesToCheck[i + 2]) {
             continue;
@@ -108,6 +140,7 @@ async function checkAvailability () {
             const result = await response.json();
             // alert (result.body[0][0].asset_id);
             assetAvailabilitySummary(result.body);
+            restartAssetsCheckAvailabilityForm();
             document.getElementById('btnAvailabilityCheckSummary').click();
             // location.reload();
         } else {
@@ -127,7 +160,18 @@ async function checkAvailability () {
 
 //Function to keep track and allow changes in the check asset availability fields
 function allowChangeCheckAvailability () {
-    alert('Changes happening.')
+    let countNotEmpty = 0;
+    document.querySelectorAll(".assetAndDate").forEach(e => {
+        if (e.value) {
+            countNotEmpty++;
+        }
+    });
+    
+    if (countNotEmpty % 3 === 0) {
+        for (let i = 0; i < 3; i++) {
+            document.querySelectorAll(".assetAndDate")[countNotEmpty+i].disabled = false;
+        }
+    }
 }
 
 //Event listener
@@ -137,4 +181,11 @@ function allowChangeCheckAvailability () {
 // document.getElementById('btnAllocationPersonnel').addEventListener('click', createFields);
 document.getElementById('btnAvailabilityCheck').addEventListener('click', checkAvailability);
 
-document.querySelectorAll(".assetAndDate").forEach(e => e.addEventListener('change', allowChangeCheckAvailability));
+document.querySelectorAll(".assetAndDate").forEach((e, index) => {
+    if (index === 0 || index === 1 || index === 2) {
+        e.disabled = false;
+    }
+    e.addEventListener('change', allowChangeCheckAvailability);
+});
+
+document.getElementById('btnCheckAvailability').addEventListener('click', restartAssetsCheckAvailabilityForm);
