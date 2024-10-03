@@ -17,65 +17,34 @@ document.getElementById('datePicker').addEventListener('change', displayDate);
 
 //--------------------------------------------------------------------------------------------------------
 //Fuction to automatically add the assets and crews' dropdown fields
-// function createFields() {
-//     let qAssets = document.getElementById('inputNumberAssets').value;
-//     let qPersonnel = document.getElementById('inputNumberEmployees').value;
-//     // console.log(`The quantity of assets is: ${qAssets}`)
-//     AssetPersonnelFields(qAssets, qPersonnel);
-// }
 
-// function AssetPersonnelFields(qAssets = 0, qPersonnel = 0) {
-//     let accumulator = "";
-//     for(let i = 0; i < qAssets; i++){
-//         accumulator = accumulator +
-//         `<div class="col-md-12">
-//             <label for="inputAssets${i + 1}" class="form-label">Asset - ${i + 1}</label>
-//             <select id="inputAssets${i + 1}" class="form-select">
-//                 <option>working</option>
-//             </select>
-//         </div>`    
-//     }  
-//     document.getElementById('formAsset').innerHTML = accumulator;
-
-//     accumulator = "";
-
-//     for(let i = 0; i < qPersonnel; i++) {
-//         accumulator = accumulator +
-//         `<div class="col-md-12">
-//             <label for="inputPersonnel${i + 1}" class="form-label">Personnel - ${i + 1}</label>
-//             <select id="inputPersonnel${i + 1}" class="form-select">
-//                 <option>working</option>
-//             </select>
-//         </div>`
-//     }
-//     document.getElementById('formPersonnel').innerHTML = accumulator;
-//     return
-// }
 
 //Function to create assets' availability summary
 function assetAvailabilitySummary (body) {
-    alert('Inside assetAvailabilitySummary');
     const container = document.getElementById('summaryAssetsAvailability');
-    const asset1 = document.createElement('p');
-    let index = 1
-    body.forEach(e => {
-        if (e.length === 0) {
-            switch (index) {
-                case 1:
-                    asset1.textContent = "Available"
-                    break;
-                default:
-                    alert('No case found.')
-            }
-        }
-        container.appendChild(asset1);
-    })
-    // `<p>Asset${} - ' '<p>${}</p></p>
-    
-    
-    
-    // `
+        
+    let htmlAccumulator = "";
 
+    for (let i = 0; i < 5; i++) {
+        let optionText = document.querySelectorAll('.assetAndDate')[3*i].options[document.querySelectorAll('.assetAndDate')[3*i].selectedIndex].textContent;
+        if (!optionText) {
+            break;
+        }
+        if (body[i].length === 0) {
+            htmlAccumulator = htmlAccumulator + `<p style="color: green;">${optionText} - Is Available</p>
+            <hr>`
+        } else {
+            let dates = [];
+            body[i].forEach(e => dates.push(e.date));
+            // let strDates = dates.join(",");
+            dates = dates.map(e => e.split('-').reverse().join('-'));
+            let strDates = dates.join(', ');
+             htmlAccumulator = htmlAccumulator + `<p style="color: red;">${optionText} - Not available</p>
+             <p>${strDates}</p>
+             <hr>`
+        }
+    }
+    container.innerHTML = htmlAccumulator;
 }
 
 //Function to restart assets check availability
@@ -93,7 +62,7 @@ function restartAssetsCheckAvailabilityForm () {
 async function checkAvailability () {
     const assetsAndDatesToCheck = [];
     const assetsAndDatesToCheckObj = [];
-    let countNotEmpty = 0, countAbled = 0;
+    let countNotEmpty = 0;
     let formReadyToSend = true;
     document.querySelectorAll(".assetAndDate").forEach(e => {
         if (e.value) {
@@ -108,6 +77,11 @@ async function checkAvailability () {
             formReadyToSend = false;
         }
     });
+
+    if (countNotEmpty <=2) { //This if is to make sure the first row cannot be enough to be submited if empty
+        alert('Please make sure at least one row is completely filled.');
+        return
+    }
 
     if (!formReadyToSend) {
         alert('Ensure there are no empty fields before any filled ones.')
@@ -138,11 +112,9 @@ async function checkAvailability () {
         const response = await fetch("/", options);
         if (response.ok) {
             const result = await response.json();
-            // alert (result.body[0][0].asset_id);
             assetAvailabilitySummary(result.body);
             restartAssetsCheckAvailabilityForm();
             document.getElementById('btnAvailabilityCheckSummary').click();
-            // location.reload();
         } else {
             const errorResult = await response.json();
             alert(`Error: ${errorResult.body}`);
@@ -151,11 +123,6 @@ async function checkAvailability () {
         console.error("Error: ", error);
         alert('There was an error fetching the data from asset_taken.');
     }
-
-
-    
-    // alert(assetsAndDatesToCheckObj[0].asset);
-    // alert('Data ready to send to server. Line 66 of daysheet.js');
 }
 
 //Function to keep track and allow changes in the check asset availability fields

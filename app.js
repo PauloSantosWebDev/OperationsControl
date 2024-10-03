@@ -1212,7 +1212,6 @@ app.post('/', (req, res) => {
             }
             index++;
         })
-        console.log(asset);
         return res.status(200).json({body: asset});
     })
 })
