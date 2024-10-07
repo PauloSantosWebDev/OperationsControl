@@ -1,0 +1,54 @@
+{% extends 'layout.njk' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="color: #E63C2B; font-weight: bold;">Create a job</h1>
+    </div>
+    <div class="container mt-5">
+        <form class="row g-3 needs-validation" novalidate> <!--action="/newemployee" method="post" -->
+            <div class="col-md-4">
+                <label for="inputAssetType" class="form-label">Supervisor/Responsible</label>
+                <select class="form-select" id="selectAssetType">
+                    <option>Supervisor</option>
+                    {# {% for opt in toParse %}
+                        <option value="{{opt.assetType}}">{{opt.assetType}}</option>
+                    {% endfor %} #}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputEmployeeFirstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="inputEmployeeFirstName" placeholder="John">
+            </div>
+            <div class="col-md-3">
+                <label for="inputEmployeeLastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="inputEmployeeLastName" placeholder="Smith">
+            </div>
+            <div class="col-md-4">
+                <label for="inputEmployeeEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmployeeEmail" placeholder="example@craneservices.com.au">
+            </div>
+            <div class="col-md-2">
+                <label for="inputEmployeePhone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="inputEmployeePhone" placeholder="0000 000 000">
+            </div>
+            <div class="col-6">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="50-52 Francis Road">
+            </div>
+            <div class="col-4">
+                <label for="inputSuburb" class="form-label">Suburb</label>
+                <input type="text" class="form-control" id="inputSuburb" placeholder="Wingfield">
+            </div>
+            <div class="col-md-2">
+                <label for="inputPostcode" class="form-label">Postcode</label>
+                <input type="text" class="form-control" id="inputPostcode" placeholder="5013">
+            </div>
+            <div class="col-12" style="text-align: right;">
+                <button type="reset" class="btn btn-dark me-md-2">Reset</button>
+                <button type="button" class="btn btn-danger me-md-2" id="js-new-employee-btn">Register</button>
+            </div>
+        </form>
+    </div>
+    {# <script src="/javascripts/daysheet.js"></script> #}
+
+{% endblock %}
