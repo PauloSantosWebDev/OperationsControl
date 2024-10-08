@@ -444,6 +444,11 @@ app.get('/newreason', (req, res) => {
     res.render('newreason.njk', {title: "Unavailability Reasons"})
 })
 
+//Create jobs page
+app.get('/createjobs', (req, res) => {
+    res.render('createjobs.njk', {title: "Create a Job"})
+})
+
 //-------------------------------------------------------------------------------------
 //Post methods
 

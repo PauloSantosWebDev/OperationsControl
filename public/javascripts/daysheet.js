@@ -57,7 +57,6 @@ function restartAssetsCheckAvailabilityForm () {
     });
 }
 
-
 //Function to run assets' availability check
 async function checkAvailability () {
     const assetsAndDatesToCheck = [];
@@ -156,3 +155,7 @@ document.querySelectorAll(".assetAndDate").forEach((e, index) => {
 });
 
 document.getElementById('btnCheckAvailability').addEventListener('click', restartAssetsCheckAvailabilityForm);
+
+document.getElementById('btnCreateJobs').addEventListener('click', () => {
+    window.location.pathname = '/createjobs'
+});

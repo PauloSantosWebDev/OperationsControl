@@ -1,42 +1,10 @@
-{% extends 'layout.njk' %}
+//Functions Area
+let accumulator = "";
 
-{% block content %}
-    <div class="container mt-5">
-        <h1 style="color: #E63C2B; font-weight: bold;">Create a job</h1>
-    </div>
-    <div class="container mt-5">
-        <form class="row g-3 needs-validation" novalidate>
-            <div class="col-md-3">
-                <label for="inputAssetType" class="form-label">Supervisor/Responsible</label>
-                <select class="form-select" id="selectAssetType">
-                    <option>Supervisor</option>
-                    {# {% for opt in toParse %}
-                        <option value="{{opt.assetType}}">{{opt.assetType}}</option>
-                    {% endfor %} #}
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label for="inputClient" class="form-label">Client</label>
-                <select class="form-select" id="selectClient">
-                    <option>Client</option>
-                    {# {% for opt in toParse %}
-                        <option value="{{opt.assetType}}">{{opt.assetType}}</option>
-                    {% endfor %} #}
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label for="inputStartDateWholeJob" class="form-label">Start Date</label>
-                <input type="date" class="form-control" id="inputStartDateWholeJob">
-            </div>
-            <div class="col-md-3">
-                <label for="inputEndDateWholeJob" class="form-label">End Date</label>
-                <input type="date" class="form-control" id="inputEndDateWholeJob">
-            </div>
-        </form>
-        <hr>
-        <h2 style="color: #E63C2B; font-weight: bold; width: 100%; margin: 0 auto; text-align: center;">Tasks</h2>
-        <div id="tasksContainer">
-            <h4 style="color: black; font-weight: bold;">Task 1</h4>
+function addTaskFields() {
+    alert("Working");
+    accumulator = document.getElementById('tasksContainer').innerHTML;
+    accumulator = accumulator + `<h4 style="color: black; font-weight: bold;">Task 1</h4>
             <form class="row g-3 needs-validation" novalidate>
                 <div class="col-md-3">
                     <label for="inputStart" class="form-label">Start Date</label>
@@ -196,14 +164,23 @@
                         {% endfor %} #}
                     </select>
                 </div>
-            </form>
-        </div>
-        <div class="col-12" style="text-align: right; margin-top: 20px;">
-            <button type="button" class="btn btn-secondary me-md-2" id="btnAddNewTask">Add new task</button>
-            <button type="button" class="btn btn-dark me-md-2">Cancel</button>
-            <button type="button" class="btn btn-danger me-md-2" id="">Register</button>
-        </div>
-    </div>
-    <script src="/javascripts/createjobs.js"></script>
+            </form>`
+    document.getElementById('tasksContainer').innerHTML = accumulator;
+}
 
-{% endblock %}
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+//--------------------------------------------------------------------------------------------------------
+
+
+
+
+//Function to run assets' availability check
+
+
+document.getElementById('btnAddNewTask').addEventListener('click', addTaskFields);
+
+
+
