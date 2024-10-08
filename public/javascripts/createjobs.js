@@ -1,10 +1,9 @@
 //Functions Area
-let accumulator = "";
+let accumulator = "", taskNumber = 2;
 
 function addTaskFields() {
-    alert("Working");
     accumulator = document.getElementById('tasksContainer').innerHTML;
-    accumulator = accumulator + `<h4 style="color: black; font-weight: bold;">Task 1</h4>
+    accumulator = accumulator + `<h4 style="color: black; font-weight: bold;">Task ${taskNumber}</h4>
             <form class="row g-3 needs-validation" novalidate>
                 <div class="col-md-3">
                     <label for="inputStart" class="form-label">Start Date</label>
@@ -122,12 +121,7 @@ function addTaskFields() {
                     <label for="counterweightBogMats1" class="form-label">Counterweight and bog mats</label>
                     <textarea class="form-control" class="cwt" rows="3" placeholder="Please describe counterweight and bog mats required for this task."></textarea>
                 </div>
-                <div class="mb-3" style="margin-bottom: 0px; margin-top: 0px;">
-                    <label for="inductionsClearances1" class="form-label">Inductions and clearances</label>
-                    <textarea class="form-control" class="inductions" rows="3" placeholder="Please describe inductions and clearances required for this task."></textarea>
-                </div>
-                <hr>
-                <h4 style="color: black; font-weight: bold;">Extra riggers</h4>
+                <h5 style="color: black; margin-top: 0px;">Extra riggers</h5>
                 <div class="col-md-3">
                     <label for="inputRigger1" class="form-label">Rigger - 1</label>
                     <select class="form-select" id="selectRigger1" class="taskRiggers">
@@ -164,8 +158,13 @@ function addTaskFields() {
                         {% endfor %} #}
                     </select>
                 </div>
+                <br>
+                <br>
+                <hr>
             </form>`
     document.getElementById('tasksContainer').innerHTML = accumulator;
+    alert(`Task ${taskNumber} created.`);
+    taskNumber++;
 }
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
