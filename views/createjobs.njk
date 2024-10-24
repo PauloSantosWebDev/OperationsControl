@@ -24,17 +24,42 @@
                     {% endfor %} #}
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="inputStartDateWholeJob" class="form-label">Start Date</label>
                 <input type="date" class="form-control" id="inputStartDateWholeJob">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label for="inputEndDateWholeJob" class="form-label">End Date</label>
                 <input type="date" class="form-control" id="inputEndDateWholeJob">
+            </div>
+            <div class="col-md-2">
+                <label for="inputAssignarNumber" class="form-label">Assignar Number</label>
+                <input type="text" class="form-control" id="inputAssignarNumber">
+            </div>
+            {# <div class="col-md-6">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress">
+            </div>
+            <div class="col-md-4">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="inputCity">
+            </div>
+            <div class="col-md-2">
+                <label for="inputPostcode" class="form-label">Postcode</label>
+                <input type="text" class="form-control" id="inputPostcode">
+            </div>
+            <div class="mb-3">
+                <label for="jobDescription" class="form-label">Job Description</label>
+                <textarea class="form-control" id="jobDescription" rows="3" placeholder="Please describe the job."></textarea>
+            </div> #}
+            <div class="mb-3">
+                <label for="inductionsClearances1" class="form-label">Requirements</label>
+                <textarea class="form-control" class="inductions" rows="3" placeholder="Please describe inductions, clearances, permits, etc. required for this job."></textarea>
             </div>
         </form>
         <hr>
         <h2 style="color: #E63C2B; font-weight: bold; width: 100%; margin: 0 auto; text-align: center;">Tasks</h2>
+        <br>
         <div id="tasksContainer">
             <h4 style="color: black; font-weight: bold;">Task 1</h4>
             <form class="row g-3 needs-validation" novalidate>
@@ -154,16 +179,7 @@
                     <label for="counterweightBogMats1" class="form-label">Counterweight and bog mats</label>
                     <textarea class="form-control" class="cwt" rows="3" placeholder="Please describe counterweight and bog mats required for this task."></textarea>
                 </div>
-                <div class="mb-3" style="margin-bottom: 0px; margin-top: 0px;">
-                    <label for="inductionsClearances" class="form-label">Inductions and clearances</label>
-                    <textarea class="form-control" class="inductions" rows="3" placeholder="Please describe inductions and clearances required for this task."></textarea>
-                </div>
-                <div class="mb-3" style="margin-bottom: 0px; margin-top: 0px;">
-                    <label for="extraInfo" class="form-label">Extra information</label>
-                    <textarea class="form-control" class="extraInfo" rows="3" placeholder="Please include extra information for this task."></textarea>
-                </div>
-                <hr>
-                <h4 style="color: black; font-weight: bold;">Extra riggers</h4>
+                <h5 style="color: black; margin-top: 0px;">Extra riggers</h5>
                 <div class="col-md-3">
                     <label for="inputRigger1" class="form-label">Rigger - 1</label>
                     <select class="form-select" id="selectRigger1" class="taskRiggers">
@@ -201,12 +217,17 @@
                     </select>
                 </div>
             </form>
+            <br>
+            <br>
+            <hr>
         </div>
         <div class="col-12" style="text-align: right; margin-top: 20px;">
             <button type="button" class="btn btn-secondary me-md-2" id="btnAddNewTask">Add new task</button>
             <button type="button" class="btn btn-dark me-md-2">Cancel</button>
             <button type="button" class="btn btn-danger me-md-2" id="">Register</button>
         </div>
+        <br>
+        <br>
     </div>
     <script src="/javascripts/createjobs.js"></script>
 
