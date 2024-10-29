@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3">
                 <label for="inductionsClearances1" class="form-label">Requirements</label>
-                <textarea class="form-control" class="inductions" rows="3" placeholder="Please describe inductions, clearances, permits, etc. required for this job."></textarea>
+                <textarea class="form-control requirements" rows="3" placeholder="Please describe inductions, clearances, permits, etc. required for this job."></textarea>
             </div>
         </form>
         <hr>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="inputStartSite" class="form-label">Site Start</label>
-                    <select class="form-select" class="taskTimes">
+                    <select class="form-select taskTimes">
                         <option selected>Choose...</option>
                         {% for i in range(0, 24) %}
                             {% if i < 12 %}
@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="inputFinishSite" class="form-label">Site Finish</label>
-                    <select class="form-select" class="taskTimes">
+                    <select class="form-select taskTimes">
                         <option selected>Choose...</option>
                         {% for i in range(0, 24) %}
                             {% if i < 12 %}
@@ -115,7 +115,7 @@
                 </div>
                 <div class="col-md-3">
                     <label for="inputFinishYard" class="form-label">Yard Finish</label>
-                    <select class="form-select" class="taskTimes">
+                    <select class="form-select taskTimes">
                         <option selected>Choose...</option>
                         {% for i in range(0, 24) %}
                             {% if i < 12 %}
@@ -132,8 +132,8 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="inputAsset1" class="form-label">Asset</label>
-                    <select class="form-select" class="taskAsset">
+                    <label for="inputAsset" class="form-label">Asset</label>
+                    <select class="form-select taskAsset">
                         <option>Asset</option>
                         {# {% for opt in toParse %}
                             <option value="{{opt.assetType}}">{{opt.assetType}}</option>
@@ -141,33 +141,24 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="inputDriver1" class="form-label">Driver</label>
-                    <select class="form-select" class="taskDriver">
-                        <option>Driver</option>
-                        {# {% for opt in toParse %}
-                            <option value="{{opt.assetType}}">{{opt.assetType}}</option>
-                        {% endfor %} #}
-                    </select>
-                </div>
-                <div class="col-md-3">
                     <label for="inputNumberRiggers" class="form-label">Number of Riggers</label>
-                    <select class="form-select" class="taskRiggers">
-                        {% for opt in range(1, 11) %}
+                    <select class="form-select taskRiggers">
+                        {% for opt in range(0, 11) %}
                             <option value="{{opt}}">{{opt}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="mb-3" style="margin-bottom: 0px; margin-top: 20px;">
                     <label for="liftingEquipmentManCages" class="form-label">Lifting Equipment and man cages</label>
-                    <textarea class="form-control" class="liftingEquipment" rows="3" placeholder="Please describe lifting equipment and man cages required for this task."></textarea>
+                    <textarea class="form-control liftingEquipment" rows="3" placeholder="Please describe lifting equipment and man cages required for this task."></textarea>
                 </div>
                 <div class="mb-3" style="margin-bottom: 0px; margin-top: 0px;">
                     <label for="counterweightBogMats" class="form-label">Counterweight and bog mats</label>
-                    <textarea class="form-control" class="cwt" rows="3" placeholder="Please describe counterweight and bog mats required for this task."></textarea>
+                    <textarea class="form-control cwt" rows="3" placeholder="Please describe counterweight and bog mats required for this task."></textarea>
                 </div>
                 <div class="mb-3" style="margin-bottom: 0px; margin-top: 0px;">
                     <label for="extraInfo" class="form-label">Extra information</label>
-                    <textarea class="form-control" class="extra" rows="3" placeholder="Please add extra information for this task."></textarea>
+                    <textarea class="form-control extra" rows="3" placeholder="Please add extra information for this task."></textarea>
                 </div>
             </form>
             <br>
